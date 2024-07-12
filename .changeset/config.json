@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [[
-    "@huomu/app"
+    "@huomu/core"
   ]],
   "linked": [],
   "access": "restricted",
