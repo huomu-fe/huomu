@@ -1,4 +1,6 @@
 export { CURD, CURDDetail, useDelete, OperateDelete } from './curd';
+export type { CURDProps, CURDMethods } from './curd';
+
 export { HMDescriptions } from './descriptions';
 export type { HMDescriptionsProps } from './descriptions';
 export { EditorJavascript } from './editor_javascript';

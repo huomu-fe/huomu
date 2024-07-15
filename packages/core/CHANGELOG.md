@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.0.4
+
+### Patch Changes
+
+- feat: CURD 整理
+
 ## 1.0.3
 
 ### Patch Changes

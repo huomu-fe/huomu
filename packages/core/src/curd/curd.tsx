@@ -1,7 +1,7 @@
 import { type ActionType } from '@ant-design/pro-components';
 import { Space } from 'antd';
 import type { ReactNode } from 'react';
-import { useCallback, useMemo, useRef } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import type { HMTableProps } from '../table';
 import { HMTable, getTableScroll } from '../table';
@@ -15,14 +15,29 @@ import { CURDDetail } from './curd_detail';
  * update 编辑
  * delete 删除
  */
-type CurdAction = 'create' | 'read' | 'read_detail' | 'update' | 'delete' | 'upload';
+type CurdAction = 'create' | 'read' | 'read_detail' | 'update' | 'delete';
 
 interface CURDProps {
   actions: CurdAction[];
   /** 表格相关 */
   hmTableProps: HMTableProps;
+
+  /** 弹窗表单 */
+  renderForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
   /** 新建按钮 */
   createButton?: ReactNode;
+  /** 新增接口 */
+  requestAdd?: (values) => Promise<any>;
+  /** 更新接口 */
+  requestUpdateById?: (values) => Promise<any>;
+
+  /** 跳转到详情的 id 所以，默认 id */
+  detailIdIndex?: string;
+  /** 获取详情接口 */
+  requestGetById?: ({ id }) => Promise<any>;
+  /** 获取详情接口，非 id 的时候 */
+  requestGetByRecord?: (record) => Promise<any>;
+
   /** 删除相关 */
   deleteProps?: {
     /** 显示名称索引 */
@@ -32,22 +47,13 @@ interface CURDProps {
     deleteByRecord?: (record) => Promise<any>;
     desc?: string;
   };
-  /** 调整到详情的 id 所以，默认 id */
-  detailIdIndex?: string;
-  /** 弹窗表单 */
-  renderForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
-  /** 获取详情接口 */
-  requestGetById?: ({ id }) => Promise<any>;
-  /** 获取详情接口，非 id 的时候 */
-  requestGetByRecord?: (record) => Promise<any>;
-  /** 新增接口 */
-  requestAdd?: (values) => Promise<any>;
-  /** 更新接口 */
-  requestUpdateById?: (values) => Promise<any>;
-  renderUploadButton?: (actionRef: React.MutableRefObject<ActionType | undefined>) => ReactNode;
 }
 
-function CURD(props: CURDProps) {
+interface CURDMethods {
+  getActionRef: () => React.MutableRefObject<ActionType | undefined>;
+}
+
+const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
   const {
     actions,
     hmTableProps,
@@ -59,8 +65,20 @@ function CURD(props: CURDProps) {
     requestGetByRecord,
     requestAdd,
     requestUpdateById,
-    renderUploadButton,
   } = props;
+
+  const actionRef = useRef<ActionType>();
+  const location = useLocation();
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        getActionRef: () => actionRef,
+      };
+    },
+    [actionRef]
+  );
 
   const detailProps = useMemo(
     () => ({
@@ -70,11 +88,8 @@ function CURD(props: CURDProps) {
       requestAdd,
       requestUpdateById,
     }),
-    [renderForm, requestAdd, requestGetById, requestGetByRecord, requestUpdateById],
+    [renderForm, requestAdd, requestGetById, requestGetByRecord, requestUpdateById]
   );
-
-  const actionRef = useRef<ActionType>();
-  const location = useLocation();
 
   const getHandleDelete = useCallback(
     (record) => {
@@ -98,7 +113,7 @@ function CURD(props: CURDProps) {
         throw new Error('没有传 deleteById or deleteByRecord');
       };
     },
-    [deleteProps],
+    [deleteProps]
   );
 
   const handleReload = useCallback(() => {
@@ -151,10 +166,10 @@ function CURD(props: CURDProps) {
     };
 
     if (actions.includes('read') || actions.includes('update') || actions.includes('delete')) {
-      return [...hmTableProps.hmColumns, operateColumn];
+      return [...hmTableProps.hmColumns, operateColumn] as HMTableProps['hmColumns'];
     }
 
-    return hmTableProps.hmColumns;
+    return hmTableProps.hmColumns as HMTableProps['hmColumns'];
   }, [
     actions,
     deleteProps,
@@ -170,13 +185,14 @@ function CURD(props: CURDProps) {
     <div className="">
       <HMTable
         rowKey="id"
-        actionRef={actionRef}
+        {...hmTableProps}
         scroll={getTableScroll(newHMColumns)}
-        toolBarRender={() => [
-          actions.includes('upload') && renderUploadButton?.(actionRef),
+        actionRef={actionRef}
+        toolBarRender={(...args) => [
+          ...(hmTableProps.toolBarRender ? hmTableProps.toolBarRender(...args) : []),
           actions.includes('create') && (
             <CURDDetail
-              key={'add'}
+              key={'create'}
               onSuccess={handleReload}
               trigger={createButton}
               action="create"
@@ -184,7 +200,6 @@ function CURD(props: CURDProps) {
             />
           ),
         ]}
-        {...hmTableProps}
         search={{
           layout: 'vertical',
           defaultCollapsed: false,
@@ -194,7 +209,7 @@ function CURD(props: CURDProps) {
       />
     </div>
   );
-}
+});
 
 export { CURD };
-export type { CURDProps };
+export type { CURDProps, CURDMethods };

@@ -25,15 +25,16 @@ interface HMTableProps<DataSource = any, Params = any, ValueType = 'text'>
   extends ProTableProps<DataSource, Params, ValueType> {
   /** hm api 请求风格 */
   hmRequest?: (
-    params: Params & { page?: number; pageSize?: number },
+    params: Params & { page?: number; pageSize?: number }
   ) => Promise<AxiosResponse<any>>;
   /** 区别 ProTable columns，默认 search: false */
-  hmColumns: ProTableProps<DataSource, Params, ValueType>['columns'];
+  hmColumns: NonNullable<ProTableProps<DataSource, Params, ValueType>['columns']>;
 }
 
-function HMTable<DataSource extends Record<string, any>, Params extends ParamsType = ParamsType>(
-  props: HMTableProps<DataSource, Params>,
-) {
+function HMTable<
+  DataSource extends Record<string, any> = any,
+  Params extends ParamsType = ParamsType
+>(props: HMTableProps<DataSource, Params>) {
   const { hmRequest, request, hmColumns, columns, rowKey = 'id', ...rest } = props;
 
   const newRequest = useCallback(
@@ -44,7 +45,7 @@ function HMTable<DataSource extends Record<string, any>, Params extends ParamsTy
       // @ts-ignore 先忽略
       return request(params, {}, {});
     },
-    [hmRequest, request],
+    [hmRequest, request]
   );
 
   const newColumns = useMemo(() => {
