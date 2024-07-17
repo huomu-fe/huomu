@@ -35,9 +35,11 @@ function Select(props: SelectProps) {
 interface Params {
   all?: { label: string; value: any };
   request: () => Promise<{ label: string; value: any }[]>;
+  // 先 any
+  useRequestOptions?: any;
 }
-function useCURDSelect({ all, request }: Params) {
-  const { data = [] } = useRequest(() => request());
+function useCURDSelect({ all, request, useRequestOptions }: Params) {
+  const { data = [] } = useRequest(() => request(), useRequestOptions);
 
   const valueEnum = useMemo(() => {
     const obj = {};

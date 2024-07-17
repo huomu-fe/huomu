@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.1.2
+
+### Patch Changes
+
+- feat: useCURDSelect
+
 ## 1.1.1
 
 ### Patch Changes
