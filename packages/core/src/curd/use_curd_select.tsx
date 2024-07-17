@@ -34,15 +34,10 @@ function Select(props: SelectProps) {
 
 interface Params {
   all?: { label: string; value: any };
-  request: (params: { page: number; pageSize: number }) => Promise<{ label: string; value: any }[]>;
+  request: () => Promise<{ label: string; value: any }[]>;
 }
 function useCURDSelect({ all, request }: Params) {
-  const { data = [] } = useRequest(() =>
-    request({
-      page: 1,
-      pageSize: 10000,
-    })
-  );
+  const { data = [] } = useRequest(() => request());
 
   const valueEnum = useMemo(() => {
     const obj = {};
