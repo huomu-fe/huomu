@@ -24,7 +24,7 @@ function Select(props: SelectProps) {
       <ProFormSelect
         name={column.dataIndex}
         options={options}
-        initialValue={initialValue === undefined && all ? all.value : undefined}
+        initialValue={initialValue === undefined && all ? all.value : initialValue}
       />
     );
   }
@@ -42,6 +42,8 @@ interface Params {
 function useCURDSelect({ all, request, useRequestOptions, initialValue }: Params) {
   const { data = [] } = useRequest(() => request(), useRequestOptions);
 
+  const initV = initialValue === undefined && all ? all.value : initialValue;
+
   const valueEnum = useMemo(() => {
     const obj = {};
     data.forEach((item) => {
@@ -56,13 +58,11 @@ function useCURDSelect({ all, request, useRequestOptions, initialValue }: Params
         ...column,
         valueEnum,
         renderFormItem: (_, { type }) => {
-          return (
-            <Select type={type} data={data} column={column} all={all} initialValue={initialValue} />
-          );
+          return <Select type={type} data={data} column={column} all={all} initialValue={initV} />;
         },
       };
     },
-    [all, data, initialValue, valueEnum]
+    [all, data, initV, valueEnum]
   );
 
   const proFormSelectProps = {
