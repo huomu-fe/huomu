@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.1.3
+
+### Patch Changes
+
+- feat: 优化 curd
+
 ## 1.1.2
 
 ### Patch Changes

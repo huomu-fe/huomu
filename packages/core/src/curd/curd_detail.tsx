@@ -1,7 +1,6 @@
 import { message } from 'antd';
-import { DrawerForm } from '@ant-design/pro-components';
+import { DrawerForm, ProForm } from '@ant-design/pro-components';
 import { useCallback, useMemo, useRef } from 'react';
-import type { ProFormInstance } from '@ant-design/pro-components';
 import type { CURDProps } from './curd';
 
 /**
@@ -17,7 +16,12 @@ type action = 'create' | 'read' | 'read_detail' | 'update' | 'delete';
 interface CURDDetailProps
   extends Pick<
     CURDProps,
-    'requestGetById' | 'requestGetByRecord' | 'requestAdd' | 'requestUpdateById' | 'renderForm'
+    | 'requestGetById'
+    | 'requestGetByRecord'
+    | 'requestAdd'
+    | 'requestUpdateById'
+    | 'renderForm'
+    | 'renderFormInstance'
   > {
   action: action;
   id?: string;
@@ -39,8 +43,10 @@ function CURDDetail(props: CURDDetailProps) {
     requestGetByRecord,
     requestAdd,
     requestUpdateById,
+    renderFormInstance,
   } = props;
-  const refForm = useRef<ProFormInstance>();
+  const refId = useRef<string>('' + Math.random());
+  const [form] = ProForm.useForm(renderFormInstance);
 
   const handleFinish = useCallback(
     async (values) => {
@@ -77,7 +83,7 @@ function CURDDetail(props: CURDDetailProps) {
         }, 10);
       }
     },
-    [action, onSuccess, requestAdd, requestUpdateById, id],
+    [action, onSuccess, requestAdd, requestUpdateById, id]
   );
 
   const handleOpenChange = useCallback(
@@ -87,22 +93,22 @@ function CURDDetail(props: CURDDetailProps) {
       }
 
       // 重置
-      refForm.current?.resetFields();
+      form?.resetFields();
 
       if (id) {
         if (requestGetById) {
           return requestGetById({ id }).then((res) => {
-            refForm.current?.setFieldsValue(res.data.data);
+            form?.setFieldsValue(res.data.data);
           });
         }
         if (requestGetByRecord) {
           return requestGetByRecord(record).then((res) => {
-            refForm.current?.setFieldsValue(res.data.data);
+            form?.setFieldsValue(res.data.data);
           });
         }
       }
     },
-    [requestGetById, requestGetByRecord, id, record],
+    [form, id, requestGetById, requestGetByRecord, record]
   );
 
   const children = useMemo(() => {
@@ -112,8 +118,8 @@ function CURDDetail(props: CURDDetailProps) {
 
   return (
     <DrawerForm
-      key={id || Math.random()}
-      formRef={refForm}
+      key={id || refId.current}
+      form={form}
       trigger={trigger}
       autoFocusFirstInput
       onFinish={handleFinish}

@@ -1,3 +1,4 @@
+import type { ProFormInstance } from '@ant-design/pro-components';
 import { type ActionType } from '@ant-design/pro-components';
 import { Space } from 'antd';
 import type { ReactNode } from 'react';
@@ -19,24 +20,9 @@ type CurdAction = 'create' | 'read' | 'read_detail' | 'update' | 'delete';
 
 interface CURDProps {
   actions: CurdAction[];
+
   /** 表格相关 */
   hmTableProps: HMTableProps;
-
-  /** 弹窗表单 */
-  renderForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
-  /** 新建按钮 */
-  createButton?: ReactNode;
-  /** 新增接口 */
-  requestAdd?: (values) => Promise<any>;
-  /** 更新接口 */
-  requestUpdateById?: (values) => Promise<any>;
-
-  /** 跳转到详情的 id 所以，默认 id */
-  detailIdIndex?: string;
-  /** 获取详情接口 */
-  requestGetById?: ({ id }) => Promise<any>;
-  /** 获取详情接口，非 id 的时候 */
-  requestGetByRecord?: (record) => Promise<any>;
 
   /** 删除相关 */
   deleteProps?: {
@@ -47,6 +33,27 @@ interface CURDProps {
     deleteByRecord?: (record) => Promise<any>;
     desc?: string;
   };
+
+  /** 新建按钮 */
+  createButton?: ReactNode;
+
+  /** 弹窗表单 */
+  renderForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
+  /** renderForm 的 formRef */
+  renderFormInstance?: ProFormInstance;
+
+  /** 新增接口 */
+  requestAdd?: (values) => Promise<any>;
+  /** 更新接口 */
+  requestUpdateById?: (values) => Promise<any>;
+
+  /** 获取详情接口 */
+  requestGetById?: ({ id }) => Promise<any>;
+  /** 获取详情接口，非 id 的时候 */
+  requestGetByRecord?: (record) => Promise<any>;
+
+  /** 跳转到详情的 id 所以，默认 id */
+  detailIdIndex?: string;
 }
 
 interface CURDMethods {
@@ -65,6 +72,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     requestGetByRecord,
     requestAdd,
     requestUpdateById,
+    renderFormInstance,
   } = props;
 
   const actionRef = useRef<ActionType>();
@@ -87,8 +95,16 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
       requestGetByRecord,
       requestAdd,
       requestUpdateById,
+      renderFormInstance,
     }),
-    [renderForm, requestAdd, requestGetById, requestGetByRecord, requestUpdateById]
+    [
+      renderForm,
+      requestAdd,
+      requestGetById,
+      requestGetByRecord,
+      requestUpdateById,
+      renderFormInstance,
+    ]
   );
 
   const getHandleDelete = useCallback(

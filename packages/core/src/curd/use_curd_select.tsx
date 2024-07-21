@@ -37,8 +37,9 @@ interface Params {
   request: () => Promise<{ label: string; value: any }[]>;
   // 先 any
   useRequestOptions?: any;
+  initialValue?: any;
 }
-function useCURDSelect({ all, request, useRequestOptions }: Params) {
+function useCURDSelect({ all, request, useRequestOptions, initialValue }: Params) {
   const { data = [] } = useRequest(() => request(), useRequestOptions);
 
   const valueEnum = useMemo(() => {
@@ -55,11 +56,13 @@ function useCURDSelect({ all, request, useRequestOptions }: Params) {
         ...column,
         valueEnum,
         renderFormItem: (_, { type }) => {
-          return <Select type={type} data={data} column={column} all={all} />;
+          return (
+            <Select type={type} data={data} column={column} all={all} initialValue={initialValue} />
+          );
         },
       };
     },
-    [all, data, valueEnum]
+    [all, data, initialValue, valueEnum]
   );
 
   const proFormSelectProps = {
