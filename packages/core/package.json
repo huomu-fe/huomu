@@ -8,6 +8,9 @@
   },
   "author": "",
   "license": "ISC",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@ant-design/plots": "^2.2.5",
