@@ -12,8 +12,5 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": [
-    "react-router"
-  ]
+  "updateInternalDependencies": "patch"
 }

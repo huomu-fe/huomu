@@ -22,8 +22,4 @@ export default defineConfig({
   },
   plugins: ['@umijs/plugins/dist/tailwindcss'],
   tailwindcss: {},
-  // 解决 dumi 依赖了 react-router@6，导致没法使用 react-router@5 从而 import { useRouteMatch } from 'react-router'; 报错
-  alias: {
-    'react-router': require.resolve('./alias/react-router'),
-  }
 });
