@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "resolveJsonModule": true,
     "strict": true,
+    "skipLibCheck": true,
     "noImplicitAny": false,
     "declaration": true,
     "esModuleInterop": true,
@@ -14,5 +15,4 @@
     "allowImportingTsExtensions": false
   },
   "include": ["src"]
-  // "exclude": ["node_modules"]
 }
