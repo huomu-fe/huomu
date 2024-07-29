@@ -4,6 +4,10 @@
   "commit": false,
   "fixed": [[
     "@huomu/core"
+  ], [
+    "@huomu/commit-lint",
+    "@huomu/eslint-config-base",
+    "@huomu/style-lint"
   ]],
   "linked": [],
   "access": "public",
