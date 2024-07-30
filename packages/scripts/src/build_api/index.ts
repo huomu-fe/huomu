@@ -2,19 +2,16 @@ import fs from 'fs-extra';
 import fetch from 'node-fetch';
 import path from 'path';
 import { generateApi } from 'swagger-typescript-api';
-import { getPackageJSON } from '../utils';
 
-const packageJSON = getPackageJSON();
-const swaggerDocs = packageJSON.swaggerDocs;
-
-async function code({ name }) {
-  const filename = path.resolve(`./src/swagger/${name}.json`);
+async function code({ name, options }) {
+  const outputDir = path.resolve(options.output);
+  const filename = path.resolve(outputDir, `./swagger/${name}.json`);
 
   console.log('code', filename);
 
   return generateApi({
     name: `${name}.ts`,
-    output: path.resolve('./src/api'),
+    output: path.resolve(outputDir, './api'),
     input: filename,
     httpClientType: 'axios',
     // 后端接口规则是 /api/:module/xxxx, 于是 moduleIndex 为 1
@@ -60,7 +57,7 @@ function merge(mergeJSON, json) {
   });
 }
 
-async function build({ docName, docUrl }) {
+async function build({ swaggerDoc: { docName, docUrl }, options }) {
   const mergeJSON: any = {};
 
   const resources = await fetch(`${docUrl}/swagger-resources`).then((response) => response.json());
@@ -85,26 +82,50 @@ async function build({ docName, docUrl }) {
     }
   }
 
-  fs.writeFileSync(`./src/swagger/${docName}.json`, JSON.stringify(mergeJSON, null, 2));
+  const outputDir = path.resolve(options.output);
+  fs.writeFileSync(
+    path.resolve(outputDir, `./swagger/${docName}.json`),
+    JSON.stringify(mergeJSON, null, 2)
+  );
 
-  await code({ name: docName });
+  await code({ name: docName, options });
 
   console.log('build_api success');
 }
 
-async function buildApi() {
+interface Options {
+  input?: string;
+  output?: string;
+}
+
+async function buildApi(options: Options) {
+  console.log('buildApi', options);
+
+  if (
+    !options.output ||
+    !options.input ||
+    !fs.existsSync(options.output) ||
+    !fs.existsSync(options.input)
+  ) {
+    throw new Error('请指定有效输入目录和输出目录');
+  }
+
+  const outputDir = path.resolve(options.output);
+
   console.log('新建 api 目录 和 swagger 目录');
-  fs.rmSync('./src/api', { recursive: true, force: true });
-  fs.rmSync('./src/swagger', { recursive: true, force: true });
-  fs.mkdirSync('./src/api');
-  fs.mkdirSync('./src/swagger');
+  fs.rmSync(path.resolve(outputDir, './api'), { recursive: true, force: true });
+  fs.rmSync(path.resolve(outputDir, './swagger'), { recursive: true, force: true });
+  fs.mkdirSync(path.resolve(outputDir, './api'));
+  fs.mkdirSync(path.resolve(outputDir, './swagger'));
+
+  const packageJSON = fs.readJSONSync(path.resolve(options.input, './package.json'));
 
   if (!packageJSON.swaggerDocs) {
     throw new Error('package.json swaggerDocs 未配置');
   }
 
-  for (const item of swaggerDocs) {
-    await build(item);
+  for (const item of packageJSON.swaggerDocs) {
+    await build({ swaggerDoc: item, options });
   }
 }
 
