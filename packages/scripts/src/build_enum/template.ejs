@@ -5,16 +5,14 @@ import { Tag } from 'antd';
 // --- <%= enumName %>
 
 export enum Enum<%= enumName %> {
-  <% Object.keys(enums[enumName]).forEach(function(enumItemName){ %>
-  <%= enumItemName%> = '<%= enumItemName%>',
+  <% Object.keys(enums[enumName]).forEach(function(enumItemName){ %><%= enumItemName%> = '<%= enumItemName%>',
   <% }); %>
 }
 
 export const valueEnum<%= enumName %> = {
   <% Object.keys(enums[enumName]).forEach(function(enumItemName){ %>
   [Enum<%= enumName %>.<%= enumItemName %>]: {
-    text: '<%=enums[enumName][enumItemName].text%>',
-    <% if(enums[enumName][enumItemName].status) {%>
+    text: '<%=enums[enumName][enumItemName].text%>',<% if(enums[enumName][enumItemName].status) {%>
     status:  '<%= enums[enumName][enumItemName].status %>'
     <%}%>
   },
@@ -41,4 +39,3 @@ export function Tag<%= enumName %>(props: { value?: Enum<%= enumName %> | string
 }
 
 <% }); %>
-

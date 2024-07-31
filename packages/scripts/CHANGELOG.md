@@ -1,5 +1,11 @@
 # @huomu/scripts
 
+## 1.0.4
+
+### Patch Changes
+
+- feat: 优化 build_api
+
 ## 1.0.3
 
 ### Patch Changes
