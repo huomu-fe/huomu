@@ -1,5 +1,11 @@
 # @huomu/scripts
 
+## 1.0.5
+
+### Patch Changes
+
+- feat: 优化 build_enum
+
 ## 1.0.4
 
 ### Patch Changes

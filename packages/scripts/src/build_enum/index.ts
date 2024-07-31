@@ -15,14 +15,14 @@ function buildEnum(options: Options) {
   }
 
   const outputDir = path.resolve(options.output);
-  console.log('新建 /enum 目录');
-  fs.rmSync(path.resolve(outputDir, './enum'), { recursive: true, force: true });
-  fs.mkdirSync(path.resolve(outputDir, './enum'));
+  console.log('新建 /enums 目录');
+  fs.rmSync(path.resolve(outputDir, './enums'), { recursive: true, force: true });
+  fs.mkdirSync(path.resolve(outputDir, './enums'));
 
   const { enums } = require(path.resolve(options.input));
   const temp = fs.readFileSync(path.resolve(__dirname, './template.ejs')).toString();
   const result = ejs.render(temp, { enums });
-  fs.writeFileSync(path.resolve(outputDir, './enum/index.tsx'), result);
+  fs.writeFileSync(path.resolve(outputDir, './enums/index.tsx'), result);
 
   console.log('buildEnum success');
 }
