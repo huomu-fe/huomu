@@ -127,6 +127,8 @@ async function buildApi(options: Options) {
   for (const item of packageJSON.swaggerDocs) {
     await build({ swaggerDoc: item, options });
   }
+
+  console.log('buildApi success');
 }
 
 export { buildApi };

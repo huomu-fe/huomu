@@ -10,3 +10,5 @@ _*
 browserslist
 LICENSE
 package*.json
+
+*.ejs
