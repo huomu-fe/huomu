@@ -1,5 +1,1 @@
-const config = require('@huomu/create-app/commitlintrc');
-
-module.exports = {
-  ...config,
-};
+module.exports = { extends: ['@huomu/commit-lint'] };

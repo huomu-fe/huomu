@@ -1,7 +1,7 @@
 ---
 nav:
   title: '实验室'
-  order: 12
+  order: 50
 toc: content
 ---
 
