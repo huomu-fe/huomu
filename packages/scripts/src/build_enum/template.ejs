@@ -20,7 +20,7 @@ export const valueEnum<%= enumName %> = {
 }
 
 export const list<%= enumName %> = Object.keys(valueEnum<%= enumName %>).map((key) => {
-  const item = valueEnumReleaseStatus[key];
+  const item = valueEnum<%= enumName %>[key];
 
   return {
     value: key,
