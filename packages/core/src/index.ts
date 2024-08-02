@@ -1,5 +1,6 @@
-export { CURD, CURDDetail, useDelete, OperateDelete, useCURDSelect } from './curd';
+export { CURD, CURDDetail, useDelete, OperateDelete } from './curd';
 export type { CURDProps, CURDMethods } from './curd';
+export { useCURDSelect } from './use_curd_select';
 
 export { HMDescriptions } from './descriptions';
 export type { HMDescriptionsProps } from './descriptions';

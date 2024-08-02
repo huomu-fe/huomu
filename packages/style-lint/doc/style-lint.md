@@ -1,8 +1,9 @@
 ---
+group: 'lint'
 toc: content
 ---
 
-# @huomu/style-lint
+# style-lint
 
 ```js
 // .stylelintrc.js

@@ -1,8 +1,9 @@
 ---
+group: 'scripts'
 toc: content
 ---
 
-# @huomu/scripts
+# scripts
 
 ```text
 Usage: index [options] [command]

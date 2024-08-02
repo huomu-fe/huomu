@@ -181,8 +181,16 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
       },
     };
 
-    if (actions.includes('read') || actions.includes('update') || actions.includes('delete')) {
-      return [...hmTableProps.hmColumns, operateColumn] as HMTableProps['hmColumns'];
+    if (
+      actions.includes('read') ||
+      actions.includes('read_detail') ||
+      actions.includes('update') ||
+      actions.includes('delete')
+    ) {
+      return [
+        ...(hmTableProps.hmColumns || hmTableProps.columns || []),
+        operateColumn,
+      ] as HMTableProps['hmColumns'];
     }
 
     return hmTableProps.hmColumns as HMTableProps['hmColumns'];
@@ -193,6 +201,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     detailProps,
     getHandleDelete,
     handleReload,
+    hmTableProps.columns,
     hmTableProps.hmColumns,
     location.pathname,
   ]);

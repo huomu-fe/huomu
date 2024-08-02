@@ -1,8 +1,9 @@
 ---
+group: 'lint'
 toc: content
 ---
 
-# @huomu/eslint-config-base
+# eslint-config-base
 
 ```js
 // .eslintrc.js

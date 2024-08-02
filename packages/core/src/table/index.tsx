@@ -28,7 +28,7 @@ interface HMTableProps<DataSource = any, Params = any, ValueType = 'text'>
     params: Params & { page?: number; pageSize?: number }
   ) => Promise<AxiosResponse<any>>;
   /** 区别 ProTable columns，默认 search: false */
-  hmColumns: NonNullable<ProTableProps<DataSource, Params, ValueType>['columns']>;
+  hmColumns?: NonNullable<ProTableProps<DataSource, Params, ValueType>['columns']>;
 }
 
 function HMTable<
@@ -80,7 +80,7 @@ function HMTable<
   );
 }
 
-function getTableScroll(columns: ProTableProps<any, any>['columns'], defaultWidth: number = 120) {
+function getTableScroll(columns: ProTableProps<any, any>['columns'], defaultWidth = 120) {
   const scroll = { x: 0, y: undefined };
 
   columns?.forEach((column) => {

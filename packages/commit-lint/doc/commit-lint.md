@@ -2,10 +2,11 @@
 nav:
   title: '工程化'
   order: 40
+group: 'lint'
 toc: content
 ---
 
-# @huomu/commit-lint
+# commit-lint
 
 ```js
 // commitlint.config.js
