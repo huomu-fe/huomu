@@ -5,7 +5,7 @@ toc: content
 
 # useCURDSelect
 
-`import { useCURDSelect } from '@huomu/core';`
+`import { useCURDSelect, useCURDSelects } from '@huomu/core';`
 
 curd select 组件，有
 
@@ -86,11 +86,128 @@ const Demo = () => {
 
   return (
     <CURD
+      actions={[]}
+      hmTableProps={{
+        hmColumns,
+        hmRequest: fakeHMRequest,
+      }}
+    />
+  );
+};
+
+export default Demo;
+```
+
+## table 和 detail 用
+
+table detail 的数据应该是独立的，所以用 useCURDSelect 没法，因此有 useCURDSelects
+
+```tsx
+import { CURD, useCURDSelects } from '@huomu/core';
+import { range } from 'lodash-es';
+import { ProFormText, ProFormSelect } from '@ant-design/pro-components';
+
+let fakeData = range(5).map((item) => ({
+  id: `${item}`,
+  name: `name-${item}`,
+  city: undefined,
+}));
+fakeData[0].city = '广州';
+fakeData[1].city = '深圳';
+
+async function fakeRequestCity() {
+  return ['广州', '深圳'];
+}
+
+async function fakeHMRequest(params) {
+  console.log('fakeHMRequest', params);
+
+  let data = fakeData;
+  if (params.city) {
+    data = data.filter((item) => item.city === params.city);
+  }
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: {
+          data: data,
+          success: true,
+          totalSize: 100,
+        },
+      });
+    }, 1000);
+  }) as Promise<any>;
+}
+
+async function fakeHMGetById(params) {
+  console.log('fakeHMGetById', params);
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: {
+          data: fakeData.find((item) => item.id === params.id),
+        },
+      });
+    }, 1000);
+  });
+}
+
+const Demo = () => {
+  const { tableCURDSelect, detailCURDSelect } = useCURDSelects({
+    initialValue: '',
+    all: { label: '城市（全部）', value: '' },
+    request: async () => {
+      const res = await fakeRequestCity();
+      return (
+        res.map((item) => ({
+          label: item,
+          value: item,
+        })) || []
+      );
+    },
+  });
+
+  const hmColumns = [
+    {
+      title: 'id',
+      dataIndex: 'id',
+      search: true,
+    },
+    {
+      title: '名字',
+      dataIndex: 'name',
+      search: true,
+    },
+    tableCURDSelect.selectColumn({
+      title: '城市',
+      dataIndex: 'city',
+      search: true,
+    }),
+  ];
+
+  return (
+    <CURD
       actions={['read']}
       hmTableProps={{
         hmColumns,
         hmRequest: fakeHMRequest,
       }}
+      renderForm={(formProps) => (
+        <>
+          <ProFormText
+            {...formProps}
+            name="name"
+            label="名字"
+            required
+            rules={[{ required: true }]}
+          />
+          <ProFormText {...formProps} name="age" label=" 年龄" required />
+          <ProFormSelect name="city" label={'所属城市'} {...detailCURDSelect.proFormSelectProps} />
+        </>
+      )}
+      requestGetById={fakeHMGetById}
     />
   );
 };
