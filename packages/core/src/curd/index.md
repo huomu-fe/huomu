@@ -25,7 +25,6 @@ import { ProFormText } from '@ant-design/pro-components';
 let fakeData = range(10).map((item) => ({
   id: `${item}`,
   name: `name-${item}`,
-  age: item,
   address: `address-${item}`,
 }));
 
@@ -105,10 +104,6 @@ const Demo = () => {
       title: '名字',
       dataIndex: 'name',
       search: true,
-    },
-    {
-      title: '年龄',
-      dataIndex: 'age',
     },
     {
       title: 'address',
