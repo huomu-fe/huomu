@@ -5,6 +5,8 @@ toc: content
 
 # useCURDSelect
 
+> 需要非常了解 ant pro-components ProForm ProTable
+
 `import { useCURDSelect, useCURDSelects } from '@huomu/core';`
 
 curd select 组件，有
@@ -98,7 +100,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-## table 和 detail 用
+## table 和 detail 一起用
 
 table detail 的数据应该是独立的，所以用 useCURDSelect 没法，因此有 useCURDSelects
 
@@ -155,7 +157,7 @@ async function fakeHMGetById(params) {
 }
 
 const Demo = () => {
-  const { tableCURDSelect, detailCURDSelect } = useCURDSelects({
+  const { tableCURDSelect, detailCURDSelect } = useCURDSelects(() => ({
     initialValue: '',
     all: { label: '城市（全部）', value: '' },
     request: async () => {
@@ -167,7 +169,7 @@ const Demo = () => {
         })) || []
       );
     },
-  });
+  }));
 
   const hmColumns = [
     {
@@ -221,7 +223,7 @@ export default Demo;
 
 ```tsx
 import { useRef } from 'react';
-import { CURD, useCURDSelect } from '@huomu/core';
+import { CURD, useCURDSelects } from '@huomu/core';
 import { range } from 'lodash-es';
 import { Button } from 'antd';
 import { ProForm, ProFormText, ProFormSelect } from '@ant-design/pro-components';
@@ -319,9 +321,14 @@ async function fakeHMUpdateById(params) {
   return Promise.resolve({});
 }
 
-function useSelect({ formInstance }) {
-  const city = ProForm.useWatch('city', formInstance);
-  const citySelect = useCURDSelect({
+const Demo = () => {
+  const formRef = useRef<any>();
+  const tableCity = ProForm.useWatch('city', formRef.current);
+
+  const [renderFormInstance] = ProForm.useForm();
+  const areaCity = ProForm.useWatch('city', renderFormInstance);
+
+  const cityCURDSelects = useCURDSelects(() => ({
     initialValue: '',
     all: { label: '城市（全部）', value: '' },
     request: async () => {
@@ -333,41 +340,27 @@ function useSelect({ formInstance }) {
         })) || []
       );
     },
-  });
+  }));
 
-  const areaSelect = useCURDSelect({
-    initialValue: '',
-    all: { label: '区域（全部）', value: '' },
-    request: async () => {
-      const res = await fakeRequestArea({ city });
-      return (
-        res.map((item) => ({
-          label: item,
-          value: item,
-        })) || []
-      );
-    },
-    useRequestOptions: {
-      refreshDeps: [city],
-    },
-  });
+  const areaCURDSelects = useCURDSelects(({ type }) => {
+    const city = type === 'table' ? tableCity : areaCity;
 
-  return {
-    citySelect,
-    areaSelect,
-  };
-}
-
-const Demo = () => {
-  const formRef = useRef<any>();
-
-  const tableSelect = useSelect({
-    formInstance: formRef.current,
-  });
-
-  const [renderFormInstance] = ProForm.useForm();
-  const formSelect = useSelect({
-    formInstance: renderFormInstance,
+    return {
+      initialValue: '',
+      all: { label: '区域（全部）', value: '' },
+      request: async () => {
+        const res = await fakeRequestArea({ city });
+        return (
+          res.map((item) => ({
+            label: item,
+            value: item,
+          })) || []
+        );
+      },
+      useRequestOptions: {
+        refreshDeps: [city],
+      },
+    };
   });
 
   const hmColumns = [
@@ -381,12 +374,12 @@ const Demo = () => {
       dataIndex: 'name',
       search: true,
     },
-    tableSelect.citySelect.selectColumn({
+    cityCURDSelects.tableCURDSelect.selectColumn({
       title: '城市',
       dataIndex: 'city',
       search: true,
     }),
-    tableSelect.areaSelect.selectColumn({
+    areaCURDSelects.tableCURDSelect.selectColumn({
       title: '区域',
       dataIndex: 'area',
       search: true,
@@ -415,12 +408,12 @@ const Demo = () => {
           <ProFormSelect
             name="city"
             label={'所属城市'}
-            {...formSelect.citySelect.proFormSelectProps}
+            {...cityCURDSelects.detailCURDSelect.proFormSelectProps}
           />
           <ProFormSelect
             name="area"
             label={'所属区域'}
-            {...formSelect.areaSelect.proFormSelectProps}
+            {...areaCURDSelects.detailCURDSelect.proFormSelectProps}
           />
         </>
       )}

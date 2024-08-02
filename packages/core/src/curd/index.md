@@ -8,7 +8,7 @@ toc: content
 
 # CURD
 
-> 需要了解 ant pro-components
+> 需要非常了解 ant pro-components ProForm ProTable
 
 `import { CURD } from '@huomu/core';`
 

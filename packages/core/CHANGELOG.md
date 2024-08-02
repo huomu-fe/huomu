@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.2.0
+
+### Minor Changes
+
+- feat: add useCURSSelects
+
 ## 1.1.4
 
 ### Patch Changes
