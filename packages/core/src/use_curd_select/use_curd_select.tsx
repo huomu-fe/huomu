@@ -26,6 +26,7 @@ function Select(props: SelectProps) {
         name={column.dataIndex}
         options={options}
         initialValue={initialValue === undefined && all ? all.value : initialValue}
+        allowClear={false}
       />
     );
   }
