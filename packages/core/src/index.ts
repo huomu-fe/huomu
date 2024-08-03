@@ -13,3 +13,4 @@ export type { NumberSwitchProps } from './number-switch';
 export { HMTable, getTableScroll } from './table';
 export type { HMTableProps } from './table';
 export { createStore } from './zustand';
+export { customValueTypeMap, CustomValueTypeEnum } from './value_type_map';

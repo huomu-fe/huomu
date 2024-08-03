@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.3.0
+
+### Minor Changes
+
+- feat: add customValueTypeMap
+
 ## 1.2.1
 
 ### Patch Changes
