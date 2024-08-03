@@ -1,6 +1,6 @@
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { type ActionType } from '@ant-design/pro-components';
-import { Space } from 'antd';
+import { Space, Button } from 'antd';
 import type { ReactNode } from 'react';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -34,7 +34,7 @@ interface CURDProps {
     desc?: string;
   };
 
-  /** 新建按钮 */
+  /** 新建按钮，默认新建 */
   createButton?: ReactNode;
 
   /** 弹窗表单 */
@@ -219,7 +219,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
             <CURDDetail
               key={'create'}
               onSuccess={handleReload}
-              trigger={createButton}
+              trigger={createButton || <Button type="primary">新建</Button>}
               action="create"
               {...detailProps}
             />

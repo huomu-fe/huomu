@@ -118,7 +118,6 @@ const Demo = () => {
         hmColumns,
         hmRequest: fakeHMRequest,
       }}
-      createButton={<Button type="primary">新建</Button>}
       deleteProps={{
         nameIndex: 'name',
         deleteById: fakeHMDeleteById,
@@ -147,66 +146,13 @@ export default Demo;
 
 ## action read_detail
 
-点击查看，在 url 上添加 `xxx/detail/[id]`
+调整 actions 为 `['read_detail']`，点击<查看>跳转到 `xxx/detail/[id]`，
 
-```tsx
+```tsx ｜ pure
 import { CURD } from '@huomu/core';
-import { range } from 'lodash-es';
-
-let fakeData = range(10).map((item) => ({
-  id: `${item}`,
-  name: `name-${item}`,
-  age: item,
-  address: `address-${item}`,
-}));
-
-async function fakeHMRequest(params) {
-  console.log('fakeHMRequest', params);
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          data: fakeData,
-          success: true,
-          totalSize: 100,
-        },
-      });
-    }, 1000);
-  }) as Promise<any>;
-}
 
 const Demo = () => {
-  const hmColumns = [
-    {
-      title: 'id',
-      dataIndex: 'id',
-      search: true,
-    },
-    {
-      title: '名字',
-      dataIndex: 'name',
-      search: true,
-    },
-    {
-      title: '年龄',
-      dataIndex: 'age',
-    },
-    {
-      title: 'address',
-      dataIndex: 'address',
-    },
-  ];
-
-  return (
-    <CURD
-      actions={['read_detail']}
-      hmTableProps={{
-        hmColumns,
-        hmRequest: fakeHMRequest,
-      }}
-    />
-  );
+  return <CURD actions={['read_detail']} ... />;
 };
 
 export default Demo;
@@ -216,71 +162,56 @@ export default Demo;
 
 获取 ProTable 的 actionRef
 
-```tsx
+```tsx | pure
 import { useRef } from 'react';
 import { CURD } from '@huomu/core';
-import { range } from 'lodash-es';
 import { Button } from 'antd';
-
-let fakeData = range(10).map((item) => ({
-  id: `${item}`,
-  name: `name-${item}`,
-  age: item,
-  address: `address-${item}`,
-}));
-
-async function fakeHMRequest(params) {
-  console.log('fakeHMRequest', params);
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          data: fakeData,
-          success: true,
-          totalSize: 100,
-        },
-      });
-    }, 1000);
-  }) as Promise<any>;
-}
 
 const Demo = () => {
   const ref = useRef<any>();
-  const hmColumns = [
-    {
-      title: 'id',
-      dataIndex: 'id',
-      search: true,
-    },
-    {
-      title: '名字',
-      dataIndex: 'name',
-      search: true,
-    },
-    {
-      title: '年龄',
-      dataIndex: 'age',
-    },
-    {
-      title: 'address',
-      dataIndex: 'address',
-    },
-  ];
 
   return (
     <div>
       <Button onClick={() => ref.current.getActionRef().current?.reload()}>reload</Button>
-      <CURD
-        actions={[]}
-        ref={ref}
-        hmTableProps={{
-          hmColumns,
-          hmRequest: fakeHMRequest,
-        }}
-      />
+      <CURD ref={ref} ... />
     </div>
   );
+};
+
+export default Demo;
+```
+
+## 获取 Table form ref
+
+```tsx | pure
+import { useRef } from 'react';
+import { CURD } from '@huomu/core';
+
+const Demo = () => {
+  const formRef = useRef<any>();
+
+  return (
+    <CURD
+      hmTableProps={{
+        formRef,
+        ...
+      }}
+    />
+  );
+};
+
+export default Demo;
+```
+
+## 获取 detail form ref
+
+```tsx | pure
+import { CURD } from '@huomu/core';
+
+const Demo = () => {
+  const [renderFormInstance] = ProForm.useForm();
+
+  return <CURD renderFormInstance={renderFormInstance} />;
 };
 
 export default Demo;
