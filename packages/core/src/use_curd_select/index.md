@@ -84,6 +84,22 @@ const Demo = () => {
       dataIndex: 'city',
       search: true,
     }),
+    {
+      title: 'city2',
+      dataIndex: 'city',
+      search: true,
+      valueType: 'select',
+      request: async () => {
+        const res = await fakeRequestCity();
+
+        return (
+          res.map((item) => ({
+            label: item,
+            value: item,
+          })) || []
+        );
+      },
+    },
   ];
 
   return (

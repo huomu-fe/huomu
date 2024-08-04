@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.3.1
+
+### Patch Changes
+
+- fix: 修复时间问题
+
 ## 1.3.0
 
 ### Minor Changes

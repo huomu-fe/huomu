@@ -11,8 +11,22 @@ const customValueTypeMap = {
     render: (text) => {
       return <div>{text ? dayjs(parseInt(text)).format('YYYY-MM-DD HH:mm:ss') : '-'}</div>;
     },
-    renderFormItem: (text, props) => {
-      return <ProFormDateRangePicker {...props} />;
+    renderFormItem: (_, props) => {
+      return (
+        <ProFormDateRangePicker
+          {...props}
+          fieldProps={{
+            ...props.fieldProps,
+            onChange: (value) => {
+              const newValue = value
+                ? [dayjs(value[0]).startOf('day'), dayjs(value[1]).endOf('day')]
+                : value;
+
+              props.fieldProps.onChange?.(newValue);
+            },
+          }}
+        />
+      );
     },
   },
 };
