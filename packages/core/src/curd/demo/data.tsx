@@ -101,4 +101,24 @@ async function fakeUpdateById(params) {
   return Promise.resolve({});
 }
 
-export { fakeRequest, fakeDeleteById, fakeGetById, fakeAdd, fakeUpdateById };
+function fakeRequestCity(): Promise<string[]> {
+  return Promise.resolve(Object.keys(citys));
+}
+
+function fakeRequestArea(params?: { city?: string }): Promise<string[]> {
+  if (!params?.city) {
+    return Promise.resolve(Object.values(citys).reduce((prev, cur) => prev.concat(cur), []));
+  }
+
+  return Promise.resolve(citys[params.city]);
+}
+
+export {
+  fakeRequest,
+  fakeDeleteById,
+  fakeGetById,
+  fakeAdd,
+  fakeUpdateById,
+  fakeRequestCity,
+  fakeRequestArea,
+};

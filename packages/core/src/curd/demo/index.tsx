@@ -2,7 +2,15 @@ import React, { useRef } from 'react';
 import { CURD } from '@huomu/core';
 import { Button } from 'antd';
 import { ProForm, ProFormText } from '@ant-design/pro-components';
-import { fakeRequest, fakeDeleteById, fakeAdd, fakeGetById, fakeUpdateById } from './data';
+import {
+  fakeRequest,
+  fakeDeleteById,
+  fakeAdd,
+  fakeGetById,
+  fakeUpdateById,
+  fakeRequestCity,
+  fakeRequestArea,
+} from './data';
 
 const Normal = () => {
   const hmColumns = [
@@ -156,4 +164,61 @@ function ActionRef() {
   );
 }
 
-export { Normal, ReadDetail, Ref, ActionRef };
+function RemoteData() {
+  const hmColumns = [
+    {
+      title: 'id',
+      dataIndex: 'id',
+      search: true,
+    },
+    {
+      title: '名字',
+      dataIndex: 'name',
+      search: true,
+    },
+    {
+      title: 'city',
+      dataIndex: 'city',
+      search: true,
+      request: async () => {
+        const res = await fakeRequestCity();
+
+        return (
+          res.map((item) => ({
+            label: item,
+            value: item,
+          })) || []
+        );
+      },
+    },
+    {
+      title: 'area',
+      dataIndex: 'area',
+      search: true,
+      request: async (params) => {
+        console.log('params', params);
+        const res = await fakeRequestArea(params);
+
+        return (
+          res.map((item) => ({
+            label: item,
+            value: item,
+          })) || []
+        );
+      },
+      dependencies: ['city'],
+    },
+  ];
+
+  return (
+    <CURD
+      actions={[]}
+      hmTableProps={{
+        hmColumns,
+        hmRequest: fakeRequest,
+      }}
+    />
+  );
+}
+
+export { Normal, ReadDetail, Ref, ActionRef, RemoteData };
