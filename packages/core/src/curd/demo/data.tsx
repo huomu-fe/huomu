@@ -5,6 +5,12 @@ const citys = {
   深圳: ['福田', '南山', '宝安'],
 };
 
+const levels = {
+  HIGH: { text: '高' },
+  MEDIUM: { text: '中' },
+  LOW: { text: '低' },
+};
+
 function random(length) {
   return Math.floor(Math.random() * length);
 }
@@ -20,6 +26,10 @@ function randomArea(params: { city?: string }) {
   return params.city && citys[params.city][random(citys[params.city].length + 1)];
 }
 
+function randomLevel() {
+  return Object.keys(levels)[random(Object.keys(levels).length + 1)];
+}
+
 function makeData(count) {
   return range(count).map((id) => {
     const city = randomCity();
@@ -30,6 +40,7 @@ function makeData(count) {
       name: `name-${id}`,
       city,
       area,
+      level: randomLevel(),
     };
   });
 }
@@ -114,6 +125,7 @@ function fakeRequestArea(params?: { city?: string }): Promise<string[]> {
 }
 
 export {
+  levels,
   fakeRequest,
   fakeDeleteById,
   fakeGetById,

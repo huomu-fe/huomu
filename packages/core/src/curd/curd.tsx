@@ -1,5 +1,4 @@
-import type { ProFormInstance } from '@ant-design/pro-components';
-import { type ActionType } from '@ant-design/pro-components';
+import type { ProFormInstance, ActionType } from '@ant-design/pro-components';
 import { Space, Button } from 'antd';
 import type { ReactNode } from 'react';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';

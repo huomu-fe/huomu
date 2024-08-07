@@ -22,14 +22,6 @@ import { Normal } from './demo';
 export default Normal;
 ```
 
-### 远程数据 & 数据依赖
-
-```tsx
-import { RemoteData } from './demo';
-
-export default RemoteData;
-```
-
 ### 详情页查看
 
 调整 actions 为 `['read_detail']`，点击<查看>跳转到 `xxx/detail/[id]`，
@@ -40,14 +32,22 @@ import { ReadDetail } from './demo';
 export default ReadDetail;
 ```
 
-### ref of table and detail
+### 本地数据 & 远程数据 & 数据依赖
+
+```tsx
+import { RemoteData } from './demo';
+
+export default RemoteData;
+```
+
+### 表格表单和详情表单 ref
 
 获取 ProTable 的 actionRef
 
 ```tsx
-import { ReadDetail } from './demo';
+import { Ref } from './demo';
 
-export default ReadDetail;
+export default Ref;
 ```
 
 ### ref.current.getActionRef
@@ -63,6 +63,10 @@ export default ActionRef;
 ## API
 
 ```tsx | pure
+import type { ReactNode } from 'react';
+import type { HMTableProps } from '../table';
+import type { ProFormInstance, ActionType } from '@ant-design/pro-components';
+
 /**
  * create 创建
  * read 查看

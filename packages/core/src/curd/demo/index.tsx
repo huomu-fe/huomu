@@ -10,6 +10,7 @@ import {
   fakeUpdateById,
   fakeRequestCity,
   fakeRequestArea,
+  levels,
 } from './data';
 
 const Normal = () => {
@@ -95,7 +96,8 @@ function Ref() {
   const name = ProForm.useWatch('name', formRef.current);
   const detailName = ProForm.useWatch('name', detailFormInstance);
 
-  console.log('name', name, 'detailName', detailName);
+  console.log('useWatch', name, detailName);
+
   const hmColumns = [
     {
       title: 'id',
@@ -175,6 +177,12 @@ function RemoteData() {
       title: '名字',
       dataIndex: 'name',
       search: true,
+    },
+    {
+      title: '等级',
+      dataIndex: 'level',
+      search: true,
+      valueEnum: levels,
     },
     {
       title: 'city',
