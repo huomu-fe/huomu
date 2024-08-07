@@ -10,209 +10,99 @@ toc: content
 
 > 需要非常了解 ant pro-components ProForm ProTable
 
-`import { CURD } from '@huomu/core';`
-
 基于 ant pro-components 通用的 CURD 组件，同时保留扩展性。
 
-## 常规用法
+## 代码演示
+
+### 常规
 
 ```tsx
-import { CURD } from '@huomu/core';
-import { range } from 'lodash-es';
-import { Button } from 'antd';
-import { ProFormText } from '@ant-design/pro-components';
+import { Normal } from './demo';
 
-let fakeData = range(10).map((item) => ({
-  id: `${item}`,
-  name: `name-${item}`,
-  address: `address-${item}`,
-}));
-
-async function fakeHMRequest(params) {
-  console.log('fakeHMRequest', params);
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          data: fakeData,
-          success: true,
-          totalSize: 100,
-        },
-      });
-    }, 1000);
-  }) as Promise<any>;
-}
-
-async function fakeHMDeleteById(params) {
-  console.log('fakeHMDeleteById', params);
-
-  fakeData = fakeData.filter((item) => item.id !== params.id);
-
-  return Promise.resolve({});
-}
-
-async function fakeHMGetById(params) {
-  console.log('fakeHMGetById', params);
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          data: fakeData.find((item) => item.id === params.id),
-        },
-      });
-    }, 1000);
-  });
-}
-
-async function fakeHMAdd(params) {
-  console.log('fakeHMAdd', params);
-
-  fakeData.push({
-    id: fakeData.length + 1,
-    ...params,
-  });
-
-  return Promise.resolve({});
-}
-
-async function fakeHMUpdateById(params) {
-  console.log('fakeHMUpdateById', params);
-
-  fakeData = fakeData.map((item) => {
-    if (item.id === params.id) {
-      return {
-        ...item,
-        ...params,
-      };
-    }
-    return item;
-  });
-
-  return Promise.resolve({});
-}
-
-const Demo = () => {
-  const hmColumns = [
-    {
-      title: 'id',
-      dataIndex: 'id',
-      search: true,
-    },
-    {
-      title: '名字',
-      dataIndex: 'name',
-      search: true,
-    },
-    {
-      title: 'address',
-      dataIndex: 'address',
-    },
-  ];
-
-  return (
-    <CURD
-      actions={['create', 'read', 'delete', 'update']}
-      hmTableProps={{
-        hmColumns,
-        hmRequest: fakeHMRequest,
-      }}
-      deleteProps={{
-        nameIndex: 'name',
-        deleteById: fakeHMDeleteById,
-      }}
-      renderForm={(formProps) => (
-        <>
-          <ProFormText
-            {...formProps}
-            name="name"
-            label="名字"
-            required
-            rules={[{ required: true }]}
-          />
-          <ProFormText {...formProps} name="age" label=" 年龄" required />
-        </>
-      )}
-      requestGetById={fakeHMGetById}
-      requestAdd={fakeHMAdd}
-      requestUpdateById={fakeHMUpdateById}
-    />
-  );
-};
-
-export default Demo;
+export default Normal;
 ```
 
-## action read_detail
+### 详情页查看
 
 调整 actions 为 `['read_detail']`，点击<查看>跳转到 `xxx/detail/[id]`，
 
-```tsx ｜ pure
-import { CURD } from '@huomu/core';
+```tsx
+import { ReadDetail } from './demo';
 
-const Demo = () => {
-  return <CURD actions={['read_detail']} ... />;
-};
-
-export default Demo;
+export default ReadDetail;
 ```
 
-## method getActionRef
+### ref of table and detail
 
 获取 ProTable 的 actionRef
 
-```tsx | pure
-import { useRef } from 'react';
-import { CURD } from '@huomu/core';
-import { Button } from 'antd';
+```tsx
+import { ReadDetail } from './demo';
 
-const Demo = () => {
-  const ref = useRef<any>();
-
-  return (
-    <div>
-      <Button onClick={() => ref.current.getActionRef().current?.reload()}>reload</Button>
-      <CURD ref={ref} ... />
-    </div>
-  );
-};
-
-export default Demo;
+export default ReadDetail;
 ```
 
-## 获取 Table form ref
+### ref.current.getActionRef
 
-```tsx | pure
-import { useRef } from 'react';
-import { CURD } from '@huomu/core';
+通过 ref 你可以做更多操作
 
-const Demo = () => {
-  const formRef = useRef<any>();
+```tsx
+import { ActionRef } from './demo';
 
-  return (
-    <CURD
-      hmTableProps={{
-        formRef,
-        ...
-      }}
-    />
-  );
-};
-
-export default Demo;
+export default ActionRef;
 ```
 
-## 获取 detail form ref
+## API
 
 ```tsx | pure
-import { CURD } from '@huomu/core';
+/**
+ * create 创建
+ * read 查看
+ * read_detail 详情页查看
+ * update 编辑
+ * delete 删除
+ */
+type CurdAction = 'create' | 'read' | 'read_detail' | 'update' | 'delete';
 
-const Demo = () => {
-  const [renderFormInstance] = ProForm.useForm();
+interface CURDProps {
+  actions: CurdAction[];
 
-  return <CURD renderFormInstance={renderFormInstance} />;
-};
+  /** 表格相关 */
+  hmTableProps: HMTableProps;
 
-export default Demo;
+  /** 删除相关 */
+  deleteProps?: {
+    /** 显示名称索引 */
+    nameIndex: string;
+    /** 删除接口 */
+    deleteById?: ({ id, ids }) => Promise<any>;
+    deleteByRecord?: (record) => Promise<any>;
+    desc?: string;
+  };
+
+  /** 新建按钮，默认新建 */
+  createButton?: ReactNode;
+
+  /** 弹窗表单 */
+  renderForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
+  /** renderForm 的 formRef */
+  renderFormInstance?: ProFormInstance;
+
+  /** 新增接口 */
+  requestAdd?: (values) => Promise<any>;
+  /** 更新接口 */
+  requestUpdateById?: (values) => Promise<any>;
+
+  /** 获取详情接口 */
+  requestGetById?: ({ id }) => Promise<any>;
+  /** 获取详情接口，非 id 的时候 */
+  requestGetByRecord?: (record) => Promise<any>;
+
+  /** 跳转到详情的 id 所以，默认 id */
+  detailIdIndex?: string;
+}
+
+interface CURDMethods {
+  getActionRef: () => React.MutableRefObject<ActionType | undefined>;
+}
 ```
