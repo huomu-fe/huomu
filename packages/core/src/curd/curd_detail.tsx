@@ -20,8 +20,8 @@ interface CURDDetailProps
     | 'requestGetByRecord'
     | 'requestAdd'
     | 'requestUpdateById'
-    | 'renderForm'
-    | 'renderFormInstance'
+    | 'detailForm'
+    | 'detailFormInstance'
   > {
   action: action;
   id?: string;
@@ -38,15 +38,15 @@ function CURDDetail(props: CURDDetailProps) {
     record,
     trigger,
     onSuccess,
-    renderForm,
+    detailForm,
     requestGetById,
     requestGetByRecord,
     requestAdd,
     requestUpdateById,
-    renderFormInstance,
+    detailFormInstance,
   } = props;
   const refId = useRef<string>('' + Math.random());
-  const [form] = ProForm.useForm(renderFormInstance);
+  const [form] = ProForm.useForm(detailFormInstance);
 
   const handleFinish = useCallback(
     async (values) => {
@@ -112,9 +112,9 @@ function CURDDetail(props: CURDDetailProps) {
   );
 
   const children = useMemo(() => {
-    if (!renderForm) return null;
-    return renderForm({ readonly: action === 'read' && !!id }, { action });
-  }, [action, id, renderForm]);
+    if (!detailForm) return null;
+    return detailForm({ readonly: action === 'read' && !!id }, { action });
+  }, [action, id, detailForm]);
 
   return (
     <DrawerForm

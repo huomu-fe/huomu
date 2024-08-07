@@ -54,55 +54,54 @@ export default ActionRef;
 
 ## API
 
-```tsx | pure
-/**
- * create 创建
- * read 查看
- * read_detail 详情页查看
- * update 编辑
- * delete 删除
- */
-type CurdAction = 'create' | 'read' | 'read_detail' | 'update' | 'delete';
+/\*\*
+
+- create 创建
+- read 查看
+- read_detail 详情页查看
+- update 编辑
+- delete 删除
+  \*/
+  type CurdAction = 'create' | 'read' | 'read_detail' | 'update' | 'delete';
 
 interface CURDProps {
-  actions: CurdAction[];
+actions: CurdAction[];
 
-  /** 表格相关 */
-  hmTableProps: HMTableProps;
+/\*_ 表格相关 _/
+hmTableProps: HMTableProps;
 
-  /** 删除相关 */
-  deleteProps?: {
-    /** 显示名称索引 */
-    nameIndex: string;
-    /** 删除接口 */
-    deleteById?: ({ id, ids }) => Promise<any>;
-    deleteByRecord?: (record) => Promise<any>;
-    desc?: string;
-  };
+/** 删除相关 \*/
+deleteProps?: {
+/** 显示名称索引 _/
+nameIndex: string;
+/\*\* 删除接口 _/
+deleteById?: ({ id, ids }) => Promise<any>;
+deleteByRecord?: (record) => Promise<any>;
+desc?: string;
+};
 
-  /** 新建按钮，默认新建 */
-  createButton?: ReactNode;
+/\*_ 新建按钮，默认新建 _/
+createButton?: ReactNode;
 
-  /** 弹窗表单 */
-  renderForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
-  /** renderForm 的 formRef */
-  renderFormInstance?: ProFormInstance;
+/** 弹窗表单 \*/
+detailForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
+/** detailForm 的 formRef \*/
+detailFormInstance?: ProFormInstance;
 
-  /** 新增接口 */
-  requestAdd?: (values) => Promise<any>;
-  /** 更新接口 */
-  requestUpdateById?: (values) => Promise<any>;
+/** 新增接口 \*/
+requestAdd?: (values) => Promise<any>;
+/** 更新接口 \*/
+requestUpdateById?: (values) => Promise<any>;
 
-  /** 获取详情接口 */
-  requestGetById?: ({ id }) => Promise<any>;
-  /** 获取详情接口，非 id 的时候 */
-  requestGetByRecord?: (record) => Promise<any>;
+/** 获取详情接口 \*/
+requestGetById?: ({ id }) => Promise<any>;
+/** 获取详情接口，非 id 的时候 \*/
+requestGetByRecord?: (record) => Promise<any>;
 
-  /** 跳转到详情的 id 所以，默认 id */
-  detailIdIndex?: string;
+/\*_ 跳转到详情的 id 所以，默认 id _/
+detailIdIndex?: string;
 }
 
 interface CURDMethods {
-  getActionRef: () => React.MutableRefObject<ActionType | undefined>;
+getActionRef: () => React.MutableRefObject<ActionType | undefined>;
 }
-```

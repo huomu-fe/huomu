@@ -38,9 +38,9 @@ interface CURDProps {
   createButton?: ReactNode;
 
   /** 弹窗表单 */
-  renderForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
-  /** renderForm 的 formRef */
-  renderFormInstance?: ProFormInstance;
+  detailForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
+  /** detailForm 的 formRef */
+  detailFormInstance?: ProFormInstance;
 
   /** 新增接口 */
   requestAdd?: (values) => Promise<any>;
@@ -67,12 +67,12 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     createButton,
     deleteProps,
     detailIdIndex,
-    renderForm,
+    detailForm,
     requestGetById,
     requestGetByRecord,
     requestAdd,
     requestUpdateById,
-    renderFormInstance,
+    detailFormInstance,
   } = props;
 
   const actionRef = useRef<ActionType>();
@@ -90,20 +90,20 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
 
   const detailProps = useMemo(
     () => ({
-      renderForm,
+      detailForm,
       requestGetById,
       requestGetByRecord,
       requestAdd,
       requestUpdateById,
-      renderFormInstance,
+      detailFormInstance,
     }),
     [
-      renderForm,
+      detailForm,
       requestAdd,
       requestGetById,
       requestGetByRecord,
       requestUpdateById,
-      renderFormInstance,
+      detailFormInstance,
     ]
   );
 

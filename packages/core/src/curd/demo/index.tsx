@@ -37,7 +37,7 @@ const Normal = () => {
         nameIndex: 'name',
         deleteById: fakeDeleteById,
       }}
-      renderForm={(formProps) => (
+      detailForm={(formProps) => (
         <>
           <ProFormText
             {...formProps}
@@ -82,10 +82,10 @@ function ReadDetail() {
 
 function Ref() {
   const formRef = useRef<any>();
-  const [renderFormInstance] = ProForm.useForm();
+  const [detailFormInstance] = ProForm.useForm();
 
   const name = ProForm.useWatch('name', formRef.current);
-  const detailName = ProForm.useWatch('name', renderFormInstance);
+  const detailName = ProForm.useWatch('name', detailFormInstance);
 
   console.log('name', name, 'detailName', detailName);
   const hmColumns = [
@@ -109,8 +109,8 @@ function Ref() {
         hmColumns,
         hmRequest: fakeRequest,
       }}
-      renderFormInstance={renderFormInstance}
-      renderForm={(formProps) => (
+      detailFormInstance={detailFormInstance}
+      detailForm={(formProps) => (
         <>
           <ProFormText
             {...formProps}
