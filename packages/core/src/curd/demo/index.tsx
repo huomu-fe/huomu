@@ -96,6 +96,7 @@ function Ref() {
   const name = ProForm.useWatch('name', formRef.current);
   const detailName = ProForm.useWatch('name', detailFormInstance);
 
+  // 不知道为啥这里 name 不生效，但是项目里是生效的。先忽略
   console.log('useWatch', name, detailName);
 
   const hmColumns = [
