@@ -212,7 +212,7 @@ const Demo = () => {
         hmColumns,
         hmRequest: fakeHMRequest,
       }}
-      renderForm={(formProps) => (
+      detailForm={(formProps) => (
         <>
           <ProFormText
             {...formProps}
@@ -341,8 +341,8 @@ const Demo = () => {
   const formRef = useRef<any>();
   const tableCity = ProForm.useWatch('city', formRef.current);
 
-  const [renderFormInstance] = ProForm.useForm();
-  const areaCity = ProForm.useWatch('city', renderFormInstance);
+  const [detailFormInstance] = ProForm.useForm();
+  const areaCity = ProForm.useWatch('city', detailFormInstance);
 
   const cityCURDSelects = useCURDSelects(() => ({
     initialValue: '',
@@ -411,7 +411,7 @@ const Demo = () => {
         hmRequest: fakeHMRequest,
       }}
       createButton={<Button type="primary">新建</Button>}
-      renderForm={(formProps) => (
+      detailForm={(formProps) => (
         <>
           <ProFormText
             {...formProps}
@@ -433,7 +433,7 @@ const Demo = () => {
           />
         </>
       )}
-      renderFormInstance={renderFormInstance}
+      detailFormInstance={detailFormInstance}
       requestGetById={fakeHMGetById}
       requestAdd={fakeHMAdd}
       requestUpdateById={fakeHMUpdateById}
