@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { CURD } from '@huomu/core';
 import { Button } from 'antd';
-import { ProForm, ProFormText } from '@ant-design/pro-components';
+import { ProForm, ProFormSwitch, ProFormText } from '@ant-design/pro-components';
 import {
   fakeRequest,
   fakeDeleteById,
@@ -93,6 +93,8 @@ function Ref() {
   const formRef = useRef<any>();
   const [detailFormInstance] = ProForm.useForm();
 
+  window._detailFormInstance = detailFormInstance;
+
   const name = ProForm.useWatch('name', formRef.current);
   const detailName = ProForm.useWatch('name', detailFormInstance);
 
@@ -114,7 +116,7 @@ function Ref() {
 
   return (
     <CURD
-      actions={['create', 'read_detail']}
+      actions={['create', 'read', 'update']}
       hmTableProps={{
         formRef,
         hmColumns,
@@ -129,9 +131,14 @@ function Ref() {
             label="名字"
             required
             rules={[{ required: true }]}
+            initialValue={'default'}
           />
+          <ProFormSwitch {...formProps} name="status" label="开启" initialValue={false} />
         </>
       )}
+      requestGetById={fakeGetById}
+      requestAdd={fakeAdd}
+      requestUpdateById={fakeUpdateById}
     />
   );
 }

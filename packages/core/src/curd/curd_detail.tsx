@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { DrawerForm, ProForm } from '@ant-design/pro-components';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { CURDProps } from './curd';
 
 /**
@@ -45,7 +45,7 @@ function CURDDetail(props: CURDDetailProps) {
     requestUpdateById,
     detailFormInstance,
   } = props;
-  const refId = useRef<string>('' + Math.random());
+  const [isOpen, setIsOpen] = useState(false);
   const [form] = ProForm.useForm(detailFormInstance);
 
   const handleFinish = useCallback(
@@ -83,18 +83,19 @@ function CURDDetail(props: CURDDetailProps) {
         }, 10);
       }
     },
-    [action, onSuccess, requestAdd, requestUpdateById, id]
+    [action, requestAdd, requestUpdateById, onSuccess, id]
   );
 
   const handleOpenChange = useCallback(
     (open) => {
       if (!open) {
+        // 关闭重置
+        form?.resetFields();
+        setIsOpen(open);
         return;
       }
 
-      // 重置
-      form?.resetFields();
-
+      setIsOpen(open);
       if (id) {
         if (requestGetById) {
           return requestGetById({ id }).then((res) => {
@@ -112,13 +113,17 @@ function CURDDetail(props: CURDDetailProps) {
   );
 
   const children = useMemo(() => {
+    // 关闭的时候不需要 children
+    if (!isOpen) {
+      return null;
+    }
+
     if (!detailForm) return null;
     return detailForm({ readonly: action === 'read' && !!id }, { action });
-  }, [action, id, detailForm]);
+  }, [isOpen, detailForm, action, id]);
 
   return (
     <DrawerForm
-      key={id || refId.current}
       form={form}
       trigger={trigger}
       autoFocusFirstInput
@@ -126,6 +131,10 @@ function CURDDetail(props: CURDDetailProps) {
       onOpenChange={handleOpenChange}
       layout="vertical"
       readonly={action === 'read' && !!id}
+      // 关闭销毁，否则会有很奇怪的 onFinish 闭包问题，怀疑 pro components bug
+      drawerProps={{
+        destroyOnClose: true,
+      }}
     >
       <div className="h-[20px]" />
       {children}

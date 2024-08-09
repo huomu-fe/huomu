@@ -145,7 +145,6 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
           <Space>
             {actions.includes('read') && (
               <CURDDetail
-                key={'read' + record.id}
                 id={record.id}
                 record={record}
                 onSuccess={handleReload}
@@ -159,7 +158,6 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
             )}
             {actions.includes('update') && (
               <CURDDetail
-                key={'update' + record.id}
                 id={record.id}
                 record={record}
                 onSuccess={handleReload}
@@ -216,7 +214,6 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
           ...(hmTableProps.toolBarRender ? hmTableProps.toolBarRender(...args) : []),
           actions.includes('create') && (
             <CURDDetail
-              key={'create'}
               onSuccess={handleReload}
               trigger={createButton || <Button type="primary">新建</Button>}
               action="create"

@@ -41,6 +41,7 @@ function makeData(count) {
       city,
       area,
       level: randomLevel(),
+      status: random(2) === 1,
     };
   });
 }
