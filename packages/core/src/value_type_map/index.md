@@ -24,6 +24,15 @@ export default Demo;
 
 ## CustomValueTypeEnum
 
+```tsx | pure
+enum CustomValueTypeEnum {
+  /** 渲染时间 + 搜索日期范围 */
+  CustomDateTimeAndDateRange = 'CustomDateTimeAndDateRange',
+  /** 渲染日期 + 搜索日期范围 */
+  CustomDateAndDateRange = 'CustomDateAndDateRange',
+}
+```
+
 ```tsx
 import { CURD, customValueTypeMap, CustomValueTypeEnum } from '@huomu/core';
 import { ProConfigProvider } from '@ant-design/pro-components';

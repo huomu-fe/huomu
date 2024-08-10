@@ -32,7 +32,7 @@ import { ReadDetail } from './demo';
 export default ReadDetail;
 ```
 
-### 本地数据 & 远程数据 & 数据依赖
+### 数据 本地&远程&依赖
 
 ```tsx
 import { RemoteData } from './demo';

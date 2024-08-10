@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import type { CURDProps } from '@huomu/core';
 import { CURD } from '@huomu/core';
 import { Button } from 'antd';
 import { ProForm, ProFormSwitch, ProFormText } from '@ant-design/pro-components';
@@ -11,6 +12,7 @@ import {
   fakeRequestCity,
   fakeRequestArea,
   levels,
+  fakeRequestSchool,
 } from './data';
 
 const Normal = () => {
@@ -21,9 +23,10 @@ const Normal = () => {
       search: true,
     },
     {
-      title: '名字',
+      title: '名字(省略)',
       dataIndex: 'name',
       search: true,
+      ellipsis: true,
     },
     {
       title: 'city',
@@ -93,6 +96,7 @@ function Ref() {
   const formRef = useRef<any>();
   const [detailFormInstance] = ProForm.useForm();
 
+  // @ts-ignore
   window._detailFormInstance = detailFormInstance;
 
   const name = ProForm.useWatch('name', formRef.current);
@@ -175,7 +179,7 @@ function ActionRef() {
 }
 
 function RemoteData() {
-  const hmColumns = [
+  const hmColumns: CURDProps['hmTableProps']['hmColumns'] = [
     {
       title: 'id',
       dataIndex: 'id',
@@ -187,13 +191,13 @@ function RemoteData() {
       search: true,
     },
     {
-      title: '等级',
+      title: '等级(本地数据)',
       dataIndex: 'level',
       search: true,
       valueEnum: levels,
     },
     {
-      title: 'city',
+      title: 'city(远端数据)',
       dataIndex: 'city',
       search: true,
       request: async () => {
@@ -208,7 +212,7 @@ function RemoteData() {
       },
     },
     {
-      title: 'area',
+      title: 'area(联动 city)',
       dataIndex: 'area',
       search: true,
       request: async (params) => {
@@ -223,6 +227,13 @@ function RemoteData() {
         );
       },
       dependencies: ['city'],
+    },
+    {
+      title: '学校(远端数据 label value)',
+      dataIndex: 'school',
+      search: true,
+      valueType: 'select',
+      request: () => fakeRequestSchool(),
     },
   ];
 

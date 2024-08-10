@@ -11,6 +11,12 @@ const levels = {
   LOW: { text: '低' },
 };
 
+const schools = [
+  { value: '0', label: '第一小学' },
+  { value: '1', label: '第二小学' },
+  { value: '2', label: '第三小学' },
+];
+
 function random(length) {
   return Math.floor(Math.random() * length);
 }
@@ -37,16 +43,17 @@ function makeData(count) {
 
     return {
       id: `${id}`,
-      name: `name-${id}`,
+      name: `这是名字这是名字 ${id}`,
       city,
       area,
       level: randomLevel(),
       status: random(2) === 1,
+      school: '' + random(schools.length),
     };
   });
 }
 
-let fakeData = makeData(100);
+let fakeData = makeData(21);
 
 async function fakeRequest(params) {
   console.log('fakeHMRequest', params);
@@ -125,6 +132,10 @@ function fakeRequestArea(params?: { city?: string }): Promise<string[]> {
   return Promise.resolve(citys[params.city]);
 }
 
+function fakeRequestSchool() {
+  return Promise.resolve(schools);
+}
+
 export {
   levels,
   fakeRequest,
@@ -134,4 +145,5 @@ export {
   fakeUpdateById,
   fakeRequestCity,
   fakeRequestArea,
+  fakeRequestSchool,
 };
