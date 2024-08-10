@@ -1,7 +1,11 @@
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-function EditorMarkdown({ value }) {
+interface EditorMarkdownProps {
+  value: string;
+}
+
+function EditorMarkdown({ value }: EditorMarkdownProps) {
   return (
     <Markdown
       unwrapDisallowed

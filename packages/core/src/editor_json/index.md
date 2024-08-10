@@ -3,22 +3,23 @@ group: 'core'
 toc: content
 ---
 
-# EditorJavascript
+# EditorJSON
 
 ```tsx
 import { useState } from 'react';
-import { EditorJavascript } from '@huomu/core';
+import { EditorJSON } from '@huomu/core';
 
 function Demo() {
   const [value, setValue] = useState(
-    `const name = 'world';
-console.log('hello', name);
+    `{
+    "name": "world"
+}
 `
   );
 
   return (
     <div style={{ width: '500px', height: '500px' }}>
-      <EditorJavascript value={value} onChange={setValue} />
+      <EditorJSON value={value} onChange={setValue} />
     </div>
   );
 }
@@ -29,7 +30,7 @@ export default Demo;
 ## API
 
 ```tsx | pure
-interface EditorJavascriptProps {
+interface EditorJSONProps {
   value: string;
   onChange: (value: string, event?: any) => void;
   readonly?: boolean;

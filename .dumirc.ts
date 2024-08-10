@@ -18,9 +18,9 @@ export default defineConfig({
     atomDirs: [
       { type: "lab", dir: "lab" },
       { type: "lib", dir: "packages/core/src" },
+      { type: "engineered", dir: "packages/huomu-scripts/src" },
       { type: "engineered", dir: "packages/commit-lint/doc" },
       { type: "engineered", dir: "packages/eslint-config-base/doc" },
-      { type: "engineered", dir: "packages/scripts/doc" },
       { type: "engineered", dir: "packages/style-lint/doc" },
     ],
   },
