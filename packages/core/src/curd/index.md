@@ -60,6 +60,14 @@ import { ActionRef } from './demo';
 export default ActionRef;
 ```
 
+### 没有搜索
+
+```tsx
+import { NoSearch } from './demo';
+
+export default NoSearch;
+```
+
 ## API
 
 ```tsx | pure

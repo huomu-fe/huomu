@@ -248,4 +248,30 @@ function RemoteData() {
   );
 }
 
-export { Normal, ReadDetail, Ref, ActionRef, RemoteData };
+function NoSearch() {
+  const ref = useRef<any>();
+
+  const hmColumns = [
+    {
+      title: 'id',
+      dataIndex: 'id',
+    },
+    {
+      title: '名字',
+      dataIndex: 'name',
+    },
+  ];
+
+  return (
+    <CURD
+      ref={ref}
+      actions={[]}
+      hmTableProps={{
+        hmColumns,
+        hmRequest: fakeRequest,
+      }}
+    />
+  );
+}
+
+export { Normal, ReadDetail, Ref, ActionRef, RemoteData, NoSearch };

@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.3.4
+
+### Patch Changes
+
+- feat: curd no search
+
 ## 1.3.3
 
 ### Patch Changes

@@ -7,6 +7,7 @@ import type { HMTableProps } from '../table';
 import { HMTable, getTableScroll } from '../table';
 import { OperateDelete } from './curd_delete';
 import { CURDDetail } from './curd_detail';
+import { find } from 'lodash-es';
 
 /**
  * create 创建
@@ -203,6 +204,8 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     location.pathname,
   ]);
 
+  const hasSearch = !!newHMColumns?.find((column) => column.search);
+
   return (
     <div className="">
       <HMTable
@@ -221,11 +224,13 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
             />
           ),
         ]}
-        search={{
-          layout: 'vertical',
-          defaultCollapsed: false,
-          ...hmTableProps.search,
-        }}
+        search={
+          hasSearch && {
+            layout: 'vertical',
+            defaultCollapsed: false,
+            ...hmTableProps.search,
+          }
+        }
         hmColumns={newHMColumns}
       />
     </div>
