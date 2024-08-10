@@ -6,7 +6,12 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 
 const fullStyle = { width: '100%', height: '100%' };
 
-function EditorJavascript({ value, onChange, readonly }) {
+interface EditorJavascriptProps {
+  value: string;
+  onChange: (value: string, event?: any) => void;
+  readonly?: boolean;
+}
+function EditorJavascript({ value, onChange, readonly }: EditorJavascriptProps) {
   return (
     <AceEditor
       style={fullStyle}
