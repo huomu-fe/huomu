@@ -1,5 +1,11 @@
 # @huomu/scripts
 
+## 1.0.7
+
+### Patch Changes
+
+- fix: scripts build_enums
+
 ## 1.0.6
 
 ### Patch Changes

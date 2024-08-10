@@ -13,7 +13,8 @@ export const valueEnum<%= enumName %> = {
   <% Object.keys(enums[enumName]).forEach(function(enumItemName){ %>
   [Enum<%= enumName %>.<%= enumItemName %>]: {
     text: '<%=enums[enumName][enumItemName].text%>',<% if(enums[enumName][enumItemName].status) {%>
-    status:  '<%= enums[enumName][enumItemName].status %>'
+    status:  '<%= enums[enumName][enumItemName].status %>',<%}%><% if(enums[enumName][enumItemName].color) {%>
+    color:  '<%= enums[enumName][enumItemName].color %>'
     <%}%>
   },
   <% }); %>
