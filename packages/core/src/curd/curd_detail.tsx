@@ -136,7 +136,6 @@ function CURDDetail(props: CURDDetailProps) {
         destroyOnClose: true,
       }}
     >
-      <div className="h-[20px]" />
       {children}
     </DrawerForm>
   );

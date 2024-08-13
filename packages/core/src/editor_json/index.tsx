@@ -3,7 +3,7 @@ import { JSONEditor as OriginJSONEditor, Mode } from 'vanilla-jsoneditor';
 
 interface EditorJSONProps {
   value: string;
-  onChange: (value: string, event?: any) => void;
+  onChange?: (value: string, event?: any) => void;
   readonly?: boolean;
 }
 

@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.4.1
+
+### Patch Changes
+
+- feat: 一些调整
+
 ## 1.4.0
 
 ### Minor Changes

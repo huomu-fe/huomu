@@ -8,7 +8,7 @@ const fullStyle = { width: '100%', height: '100%' };
 
 interface EditorJavascriptProps {
   value: string;
-  onChange: (value: string, event?: any) => void;
+  onChange?: (value: string, event?: any) => void;
   readonly?: boolean;
 }
 function EditorJavascript({ value, onChange, readonly }: EditorJavascriptProps) {
