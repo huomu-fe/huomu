@@ -4,6 +4,7 @@ import { Modal } from 'antd';
 interface Params {
   name: string;
   desc?: string;
+  operateText?: string;
   onDelete: () => Promise<any>;
 }
 function useDelete(params: Params) {
@@ -27,7 +28,7 @@ function useDelete(params: Params) {
 }
 
 function OperateDelete(props: Params) {
-  const { name, desc, onDelete } = props;
+  const { name, desc, onDelete, operateText } = props;
   const handleClick = useCallback(() => {
     Modal.confirm({
       title: `确认删除 “${name}” 吗？`,
@@ -42,7 +43,7 @@ function OperateDelete(props: Params) {
 
   return (
     <a style={{ color: 'red' }} onClick={handleClick}>
-      删除
+      {operateText || '删除'}
     </a>
   );
 }

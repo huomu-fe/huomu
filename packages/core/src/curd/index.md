@@ -68,6 +68,14 @@ import { NoSearch } from './demo';
 export default NoSearch;
 ```
 
+### 自定义操作
+
+```tsx
+import { CustomOperate } from './demo';
+
+export default CustomOperate;
+```
+
 ## API
 
 ```tsx | pure
@@ -90,18 +98,32 @@ interface CURDProps {
   /** 表格相关 */
   hmTableProps: HMTableProps;
 
+  /** 新建按钮，默认新建 */
+  createButton?: ReactNode;
+
+  operateColumnProps?: {
+    width?: number;
+    /** 扩展操作区域 */
+    moreOperator?: (record) => ReactNode;
+  };
+
+  checkProps?: {
+    /** 文本 */
+    operateText?: string;
+  };
+
+  /** 删除接口 */
+  deleteById?: ({ id, ids }) => Promise<any>;
+  deleteByRecord?: (record) => Promise<any>;
   /** 删除相关 */
   deleteProps?: {
     /** 显示名称索引 */
     nameIndex: string;
-    /** 删除接口 */
-    deleteById?: ({ id, ids }) => Promise<any>;
-    deleteByRecord?: (record) => Promise<any>;
+    /** 删除确认描述 */
     desc?: string;
+    /** 文本 */
+    operateText?: string;
   };
-
-  /** 新建按钮，默认新建 */
-  createButton?: ReactNode;
 
   /** 弹窗表单 */
   detailForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
@@ -110,11 +132,17 @@ interface CURDProps {
 
   /** 新增接口 */
   requestAdd?: (values) => Promise<any>;
+
   /** 更新接口 */
   requestUpdateById?: (values) => Promise<any>;
+  updateProps?: {
+    /** 文本 */
+    operateText?: string;
+  };
 
   /** 获取详情接口 */
   requestGetById?: ({ id }) => Promise<any>;
+
   /** 获取详情接口，非 id 的时候 */
   requestGetByRecord?: (record) => Promise<any>;
 

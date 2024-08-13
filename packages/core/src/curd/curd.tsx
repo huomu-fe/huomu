@@ -7,7 +7,6 @@ import type { HMTableProps } from '../table';
 import { HMTable, getTableScroll } from '../table';
 import { OperateDelete } from './curd_delete';
 import { CURDDetail } from './curd_detail';
-import { find } from 'lodash-es';
 
 /**
  * create 创建
@@ -24,18 +23,32 @@ interface CURDProps {
   /** 表格相关 */
   hmTableProps: HMTableProps;
 
+  /** 新建按钮，默认新建 */
+  createButton?: ReactNode;
+
+  operateColumnProps?: {
+    width?: number;
+    /** 扩展操作区域 */
+    moreOperator?: (record) => ReactNode;
+  };
+
+  checkProps?: {
+    /** 文本 */
+    operateText?: string;
+  };
+
+  /** 删除接口 */
+  deleteById?: ({ id, ids }) => Promise<any>;
+  deleteByRecord?: (record) => Promise<any>;
   /** 删除相关 */
   deleteProps?: {
     /** 显示名称索引 */
     nameIndex: string;
-    /** 删除接口 */
-    deleteById?: ({ id, ids }) => Promise<any>;
-    deleteByRecord?: (record) => Promise<any>;
+    /** 删除确认描述 */
     desc?: string;
+    /** 文本 */
+    operateText?: string;
   };
-
-  /** 新建按钮，默认新建 */
-  createButton?: ReactNode;
 
   /** 弹窗表单 */
   detailForm?: (formProps: { readonly: boolean }, info: { action: CurdAction }) => ReactNode;
@@ -44,11 +57,17 @@ interface CURDProps {
 
   /** 新增接口 */
   requestAdd?: (values) => Promise<any>;
+
   /** 更新接口 */
   requestUpdateById?: (values) => Promise<any>;
+  updateProps?: {
+    /** 文本 */
+    operateText?: string;
+  };
 
   /** 获取详情接口 */
   requestGetById?: ({ id }) => Promise<any>;
+
   /** 获取详情接口，非 id 的时候 */
   requestGetByRecord?: (record) => Promise<any>;
 
@@ -65,12 +84,17 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     actions,
     hmTableProps,
     createButton,
+    operateColumnProps,
+    checkProps,
+    deleteById,
+    deleteByRecord,
     deleteProps,
     detailIdIndex,
     detailForm,
     requestGetById,
     requestGetByRecord,
     requestAdd,
+    updateProps,
     requestUpdateById,
     detailFormInstance,
   } = props;
@@ -110,18 +134,15 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
   const getHandleDelete = useCallback(
     (record) => {
       return () => {
-        if (deleteProps?.deleteById) {
-          return deleteProps!
-            .deleteById({
-              id: record.id,
-              ids: [record.id],
-            })
-            .then(() => {
-              actionRef.current?.reload();
-            });
-        }
-        if (deleteProps?.deleteByRecord) {
-          return deleteProps!.deleteByRecord(record).then(() => {
+        if (deleteById) {
+          return deleteById({
+            id: record.id,
+            ids: [record.id],
+          }).then(() => {
+            actionRef.current?.reload();
+          });
+        } else if (deleteByRecord) {
+          return deleteByRecord(record).then(() => {
             actionRef.current?.reload();
           });
         }
@@ -129,7 +150,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
         throw new Error('没有传 deleteById or deleteByRecord');
       };
     },
-    [deleteProps]
+    [deleteById, deleteByRecord]
   );
 
   const handleReload = useCallback(() => {
@@ -140,29 +161,32 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     const operateColumn = {
       title: '操作',
       fixed: 'right',
-      width: 120,
+      width: operateColumnProps?.width || 120,
       render: function (_, record) {
         return (
           <Space>
+            {operateColumnProps?.moreOperator && operateColumnProps.moreOperator(record)}
             {actions.includes('read') && (
               <CURDDetail
                 id={record.id}
                 record={record}
                 onSuccess={handleReload}
-                trigger={<a>查看</a>}
+                trigger={<a>{checkProps?.operateText || '查看'}</a>}
                 action="read"
                 {...detailProps}
               />
             )}
             {actions.includes('read_detail') && (
-              <Link to={`${location.pathname}/detail/${record[detailIdIndex || 'id']}`}>查看</Link>
+              <Link to={`${location.pathname}/detail/${record[detailIdIndex || 'id']}`}>
+                {checkProps?.operateText || '查看'}
+              </Link>
             )}
             {actions.includes('update') && (
               <CURDDetail
                 id={record.id}
                 record={record}
                 onSuccess={handleReload}
-                trigger={<a>编辑</a>}
+                trigger={<a>{updateProps?.operateText || '编辑'}</a>}
                 action="update"
                 {...detailProps}
               />
@@ -171,6 +195,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
               <OperateDelete
                 name={record[deleteProps.nameIndex]}
                 desc={deleteProps.desc}
+                operateText={deleteProps.operateText}
                 onDelete={getHandleDelete(record)}
               />
             )}
@@ -194,6 +219,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     return hmTableProps.hmColumns as HMTableProps['hmColumns'];
   }, [
     actions,
+    checkProps?.operateText,
     deleteProps,
     detailIdIndex,
     detailProps,
@@ -202,6 +228,8 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     hmTableProps.columns,
     hmTableProps.hmColumns,
     location.pathname,
+    operateColumnProps,
+    updateProps?.operateText,
   ]);
 
   const hasSearch = !!newHMColumns?.find((column) => column.search);

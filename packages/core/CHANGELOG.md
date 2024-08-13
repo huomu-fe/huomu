@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.4.0
+
+### Minor Changes
+
+- feat: 调整 curd
+
 ## 1.3.4
 
 ### Patch Changes

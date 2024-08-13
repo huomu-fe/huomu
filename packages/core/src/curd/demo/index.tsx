@@ -45,9 +45,9 @@ const Normal = () => {
         hmColumns,
         hmRequest: fakeRequest,
       }}
+      deleteById={fakeDeleteById}
       deleteProps={{
         nameIndex: 'name',
-        deleteById: fakeDeleteById,
       }}
       detailForm={(formProps) => (
         <>
@@ -274,4 +274,59 @@ function NoSearch() {
   );
 }
 
-export { Normal, ReadDetail, Ref, ActionRef, RemoteData, NoSearch };
+const CustomOperate = () => {
+  const hmColumns = [
+    {
+      title: 'id',
+      dataIndex: 'id',
+      search: true,
+    },
+    {
+      title: '名字',
+      dataIndex: 'name',
+      search: true,
+      ellipsis: true,
+    },
+  ];
+
+  return (
+    <CURD
+      actions={['create', 'read', 'delete', 'update']}
+      hmTableProps={{
+        hmColumns,
+        hmRequest: fakeRequest,
+      }}
+      operateColumnProps={{
+        width: 230,
+        moreOperator: () => <div>custom</div>,
+      }}
+      checkProps={{
+        operateText: '查看啦',
+      }}
+      deleteById={fakeDeleteById}
+      deleteProps={{
+        nameIndex: 'name',
+        operateText: '删除啦',
+      }}
+      detailForm={(formProps) => (
+        <>
+          <ProFormText
+            {...formProps}
+            name="name"
+            label="名字"
+            required
+            rules={[{ required: true }]}
+          />
+        </>
+      )}
+      requestGetById={fakeGetById}
+      requestAdd={fakeAdd}
+      updateProps={{
+        operateText: '更新啦',
+      }}
+      requestUpdateById={fakeUpdateById}
+    />
+  );
+};
+
+export { Normal, ReadDetail, Ref, ActionRef, RemoteData, NoSearch, CustomOperate };
