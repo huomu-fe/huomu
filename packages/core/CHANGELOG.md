@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.4.2
+
+### Patch Changes
+
+- feat: 优化 EditorXXX
+
 ## 1.4.1
 
 ### Patch Changes

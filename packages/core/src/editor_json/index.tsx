@@ -1,15 +1,18 @@
 import { useEffect, useRef } from 'react';
-import { JSONEditor as OriginJSONEditor, Mode } from 'vanilla-jsoneditor';
+import type { Mode } from 'vanilla-jsoneditor';
+import { JSONEditor } from 'vanilla-jsoneditor';
 
 interface EditorJSONProps {
   value: string;
   onChange?: (value: string, event?: any) => void;
   readonly?: boolean;
+  mode?: 'text' | 'tree' | 'table';
+  mainMenuBar?: boolean;
 }
 
-function EditorJSON({ value, onChange, readonly }: EditorJSONProps) {
+function EditorJSON({ value, onChange, readonly, mode, mainMenuBar }: EditorJSONProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const refEditor = useRef<OriginJSONEditor | null>(null);
+  const refEditor = useRef<JSONEditor | null>(null);
 
   const refOnChange = useRef(onChange);
 
@@ -20,10 +23,12 @@ function EditorJSON({ value, onChange, readonly }: EditorJSONProps) {
   }, [value]);
 
   useEffect(() => {
-    refEditor.current = new OriginJSONEditor({
+    refEditor.current = new JSONEditor({
       target: ref.current!,
       props: {
-        mode: Mode.text,
+        mainMenuBar,
+        tabSize: 2,
+        mode: (mode || 'text') as Mode,
         readOnly: readonly,
         content: {
           text: value || '',

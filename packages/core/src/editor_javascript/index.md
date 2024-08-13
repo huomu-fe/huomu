@@ -5,6 +5,10 @@ toc: content
 
 # EditorJavascript
 
+## 代码演示
+
+### 常规
+
 ```tsx
 import { useState } from 'react';
 import { EditorJavascript } from '@huomu/core';
@@ -19,6 +23,29 @@ console.log('hello', name);
   return (
     <div style={{ width: '500px', height: '500px' }}>
       <EditorJavascript value={value} onChange={setValue} />
+    </div>
+  );
+}
+
+export default Demo;
+```
+
+### readonly
+
+```tsx
+import { useState } from 'react';
+import { EditorJavascript } from '@huomu/core';
+
+function Demo() {
+  const [value, setValue] = useState(
+    `const name = 'world';
+console.log('hello', name);
+`
+  );
+
+  return (
+    <div style={{ width: '500px', height: '500px' }}>
+      <EditorJavascript value={value} onChange={setValue} readonly />
     </div>
   );
 }
