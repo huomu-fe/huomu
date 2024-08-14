@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.4.3
+
+### Patch Changes
+
+- fix: checkProps => readProps
+
 ## 1.4.2
 
 ### Patch Changes

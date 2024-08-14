@@ -300,7 +300,7 @@ const CustomOperate = () => {
         width: 230,
         moreOperator: () => <div>custom</div>,
       }}
-      checkProps={{
+      readProps={{
         operateText: '查看啦',
       }}
       deleteById={fakeDeleteById}

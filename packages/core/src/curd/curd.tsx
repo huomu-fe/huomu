@@ -32,7 +32,7 @@ interface CURDProps {
     moreOperator?: (record) => ReactNode;
   };
 
-  checkProps?: {
+  readProps?: {
     /** 文本 */
     operateText?: string;
   };
@@ -85,7 +85,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     hmTableProps,
     createButton,
     operateColumnProps,
-    checkProps,
+    readProps,
     deleteById,
     deleteByRecord,
     deleteProps,
@@ -171,14 +171,14 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
                 id={record.id}
                 record={record}
                 onSuccess={handleReload}
-                trigger={<a>{checkProps?.operateText || '查看'}</a>}
+                trigger={<a>{readProps?.operateText || '查看'}</a>}
                 action="read"
                 {...detailProps}
               />
             )}
             {actions.includes('read_detail') && (
               <Link to={`${location.pathname}/detail/${record[detailIdIndex || 'id']}`}>
-                {checkProps?.operateText || '查看'}
+                {readProps?.operateText || '查看'}
               </Link>
             )}
             {actions.includes('update') && (
@@ -219,7 +219,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     return hmTableProps.hmColumns as HMTableProps['hmColumns'];
   }, [
     actions,
-    checkProps?.operateText,
+    readProps?.operateText,
     deleteProps,
     detailIdIndex,
     detailProps,

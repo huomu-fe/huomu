@@ -107,7 +107,7 @@ interface CURDProps {
     moreOperator?: (record) => ReactNode;
   };
 
-  checkProps?: {
+  readProps?: {
     /** 文本 */
     operateText?: string;
   };
