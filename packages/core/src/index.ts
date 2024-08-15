@@ -1,6 +1,7 @@
 export { CURD, CURDDetail, useDelete, OperateDelete } from './curd';
 export type { CURDProps, CURDMethods } from './curd';
 
+export { HMProFormJSON } from './form';
 export { HMDescriptions } from './descriptions';
 export type { HMDescriptionsProps } from './descriptions';
 export { EditorJavascript } from './editor_javascript';
@@ -10,4 +11,4 @@ export { FileUpload } from './file_upload';
 export { HMTable, getTableScroll } from './table';
 export type { HMTableProps } from './table';
 export { createStore } from './zustand';
-export { customValueTypeMap, CustomValueTypeEnum, dateRender, jsonRender } from './value_type_map';
+export { customValueTypeMap, CustomValueTypeEnum } from './value_type_map';

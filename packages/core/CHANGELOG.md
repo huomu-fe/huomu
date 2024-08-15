@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.5.1
+
+### Patch Changes
+
+- fix: 调整 JSON
+
 ## 1.5.0
 
 ### Minor Changes

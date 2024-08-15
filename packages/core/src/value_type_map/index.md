@@ -48,7 +48,7 @@ async function fakeHMRequest() {
     timeNumber: +dayjs('2024-10-01 10:00:00'),
     dateStr: `2024-10-01`,
     dateNumber: +dayjs('2024-10-01'),
-    jsonText: JSON.stringify({ name: 'world' }),
+    jsonText: JSON.stringify({ name: 'hello world hello world hello world' }),
   }));
 
   return Promise.resolve({
@@ -113,20 +113,6 @@ const Demo = () => (
     <Table />
   </ProConfigProvider>
 );
-
-export default Demo;
-```
-
-## renderDetailFormItem
-
-JSON
-
-```tsx
-import { jsonRender } from '@huomu/core';
-
-function Demo() {
-  return <>{jsonRender.renderDetailFormItem({ name: 'world' })}</>;
-}
 
 export default Demo;
 ```

@@ -26,4 +26,4 @@ const customValueTypeMap: Record<string, ProRenderFieldPropsType> = {
   },
 };
 
-export { customValueTypeMap, CustomValueTypeEnum, dateRender, jsonRender };
+export { customValueTypeMap, CustomValueTypeEnum };
