@@ -2,6 +2,7 @@ import { message } from 'antd';
 import { DrawerForm, ProForm } from '@ant-design/pro-components';
 import { useCallback, useMemo, useState } from 'react';
 import type { CURDProps } from './curd';
+import { isString } from 'lodash-es';
 
 /**
  * create 创建
@@ -18,7 +19,9 @@ interface CURDDetailProps
     CURDProps,
     | 'requestGetById'
     | 'requestGetByRecord'
+    | 'addProps'
     | 'requestAdd'
+    | 'updateProps'
     | 'requestUpdateById'
     | 'detailForm'
     | 'detailFormInstance'
@@ -41,7 +44,9 @@ function CURDDetail(props: CURDDetailProps) {
     detailForm,
     requestGetById,
     requestGetByRecord,
+    addProps,
     requestAdd,
+    updateProps,
     requestUpdateById,
     detailFormInstance,
   } = props;
@@ -51,31 +56,49 @@ function CURDDetail(props: CURDDetailProps) {
   const handleFinish = useCallback(
     async (values) => {
       try {
+        let result;
         if (action === 'create' && requestAdd) {
-          await requestAdd(values);
+          result = await requestAdd(values);
+
+          let content = '新建成功';
+          if (addProps?.successText) {
+            content = isString(addProps.successText)
+              ? addProps.successText
+              : addProps.successText();
+          }
 
           message.open({
             type: 'success',
-            content: '创建成功',
+            content,
           });
         }
         if (action === 'update' && requestUpdateById) {
-          await requestUpdateById({
+          result = await requestUpdateById({
             ...values,
             id,
           });
 
+          let content = '更新成功';
+          if (updateProps?.successText) {
+            content = isString(updateProps.successText)
+              ? updateProps.successText
+              : updateProps.successText();
+          }
+
           message.open({
             type: 'success',
-            content: '更新成功',
+            content,
           });
         }
 
         // 刷新
         onSuccess?.();
 
-        // 关闭弹窗
-        return true;
+        // false 则取消默认行为
+        if (result !== false) {
+          // 关闭弹窗
+          return true;
+        }
       } catch (e) {
         // 由于 onFinish 吃掉了 error，所以这里自行抛出
         setTimeout(() => {
@@ -83,7 +106,7 @@ function CURDDetail(props: CURDDetailProps) {
         }, 10);
       }
     },
-    [action, requestAdd, requestUpdateById, onSuccess, id]
+    [action, requestAdd, requestUpdateById, onSuccess, addProps, id, updateProps]
   );
 
   const handleOpenChange = useCallback(

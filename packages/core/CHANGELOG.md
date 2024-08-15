@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.5.4
+
+### Patch Changes
+
+- feat: curd 自定义文案
+
 ## 1.5.3
 
 ### Patch Changes

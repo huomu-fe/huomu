@@ -274,7 +274,7 @@ function NoSearch() {
   );
 }
 
-const CustomOperate = () => {
+const CustomText = () => {
   const hmColumns = [
     {
       title: 'id',
@@ -321,12 +321,16 @@ const CustomOperate = () => {
       )}
       requestGetById={fakeGetById}
       requestAdd={fakeAdd}
+      addProps={{
+        successText: '新建成功啦',
+      }}
       updateProps={{
         operateText: '更新啦',
+        successText: '更新成功啦',
       }}
       requestUpdateById={fakeUpdateById}
     />
   );
 };
 
-export { Normal, ReadDetail, Ref, ActionRef, RemoteData, NoSearch, CustomOperate };
+export { Normal, ReadDetail, Ref, ActionRef, RemoteData, NoSearch, CustomText };

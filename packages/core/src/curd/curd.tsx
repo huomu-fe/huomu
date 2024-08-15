@@ -58,11 +58,18 @@ interface CURDProps {
   /** 新增接口 */
   requestAdd?: (values) => Promise<any>;
 
+  addProps?: {
+    /** 成功文案 */
+    successText?: string | (() => string);
+  };
+
   /** 更新接口 */
   requestUpdateById?: (values) => Promise<any>;
   updateProps?: {
     /** 文本 */
     operateText?: string;
+    /** 成功文案 */
+    successText?: string | (() => string);
   };
 
   /** 获取详情接口 */
@@ -93,6 +100,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
     detailForm,
     requestGetById,
     requestGetByRecord,
+    addProps,
     requestAdd,
     updateProps,
     requestUpdateById,
@@ -120,14 +128,18 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
       requestAdd,
       requestUpdateById,
       detailFormInstance,
+      addProps,
+      updateProps,
     }),
     [
       detailForm,
-      requestAdd,
       requestGetById,
       requestGetByRecord,
+      requestAdd,
       requestUpdateById,
       detailFormInstance,
+      addProps,
+      updateProps,
     ]
   );
 

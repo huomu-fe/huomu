@@ -68,12 +68,12 @@ import { NoSearch } from './demo';
 export default NoSearch;
 ```
 
-### 自定义操作
+### 自定义文案
 
 ```tsx
-import { CustomOperate } from './demo';
+import { CustomText } from './demo';
 
-export default CustomOperate;
+export default CustomText;
 ```
 
 ## API
@@ -133,11 +133,18 @@ interface CURDProps {
   /** 新增接口 */
   requestAdd?: (values) => Promise<any>;
 
+  addProps?: {
+    /** 成功文案 */
+    successText?: string | (() => string);
+  };
+
   /** 更新接口 */
   requestUpdateById?: (values) => Promise<any>;
   updateProps?: {
     /** 文本 */
     operateText?: string;
+    /** 成功文案 */
+    successText?: string | (() => string);
   };
 
   /** 获取详情接口 */
