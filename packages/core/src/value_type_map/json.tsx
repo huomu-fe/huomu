@@ -14,7 +14,23 @@ function render(text) {
   }
 
   return (
-    <Typography.Text className="block max-w-full overflow-hidden" ellipsis={{ tooltip: jsonText }}>
+    <Typography.Text
+      className="block max-w-full overflow-hidden"
+      ellipsis={{
+        tooltip: {
+          title: (
+            <pre
+              style={{
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+              }}
+            >
+              {jsonText}
+            </pre>
+          ),
+        },
+      }}
+    >
       {text}
     </Typography.Text>
   );

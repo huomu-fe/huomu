@@ -93,6 +93,7 @@ const Table = () => {
     {
       title: 'json',
       dataIndex: 'jsonText',
+      ellipsis: true,
       valueType: CustomValueTypeEnum.CustomJSON,
     },
   ];
