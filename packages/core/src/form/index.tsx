@@ -1,3 +1,4 @@
+import type { ProFormItemProps } from '@ant-design/pro-components';
 import { ProForm } from '@ant-design/pro-components';
 import { EditorJSON } from '../editor_json';
 
@@ -9,11 +10,11 @@ function Item(props) {
   );
 }
 
-function HMProFormJSON(props) {
-  const { readonly, ...rest } = props;
+function HMProFormJSON(props: ProFormItemProps) {
+  const { readonly, fieldProps, ...rest } = props;
   return (
     <ProForm.Item {...rest}>
-      <Item readonly={readonly} />
+      <Item readonly={readonly} {...fieldProps} />
     </ProForm.Item>
   );
 }
