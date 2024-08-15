@@ -30,6 +30,8 @@ enum CustomValueTypeEnum {
   CustomDateTimeAndDateRange = 'CustomDateTimeAndDateRange',
   /** 渲染日期 + 搜索日期范围 */
   CustomDateAndDateRange = 'CustomDateAndDateRange',
+  /** JSON */
+  CustomJSON = 'CustomJSON',
 }
 ```
 
@@ -46,6 +48,7 @@ async function fakeHMRequest() {
     timeNumber: +dayjs('2024-10-01 10:00:00'),
     dateStr: `2024-10-01`,
     dateNumber: +dayjs('2024-10-01'),
+    jsonText: JSON.stringify({ name: 'world' }),
   }));
 
   return Promise.resolve({
@@ -87,6 +90,11 @@ const Table = () => {
       valueType: CustomValueTypeEnum.CustomDateAndDateRange,
       search: true,
     },
+    {
+      title: 'json',
+      dataIndex: 'jsonText',
+      valueType: CustomValueTypeEnum.CustomJSON,
+    },
   ];
 
   return (
@@ -105,6 +113,20 @@ const Demo = () => (
     <Table />
   </ProConfigProvider>
 );
+
+export default Demo;
+```
+
+## renderDetailFormItem
+
+JSON
+
+```tsx
+import { jsonRender } from '@huomu/core';
+
+function Demo() {
+  return <>{jsonRender.renderDetailFormItem({ name: 'world' })}</>;
+}
 
 export default Demo;
 ```

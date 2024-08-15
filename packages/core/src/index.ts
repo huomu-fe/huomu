@@ -10,4 +10,4 @@ export { FileUpload } from './file_upload';
 export { HMTable, getTableScroll } from './table';
 export type { HMTableProps } from './table';
 export { createStore } from './zustand';
-export { customValueTypeMap, CustomValueTypeEnum } from './value_type_map';
+export { customValueTypeMap, CustomValueTypeEnum, dateRender, jsonRender } from './value_type_map';
