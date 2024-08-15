@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.5.3
+
+### Patch Changes
+
+- feat: 完善 json
+
 ## 1.5.2
 
 ### Patch Changes
