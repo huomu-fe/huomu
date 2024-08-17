@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.6.0
+
+### Minor Changes
+
+- feat: add HMProFormJavascript
+
 ## 1.5.4
 
 ### Patch Changes
