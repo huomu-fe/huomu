@@ -30,6 +30,7 @@ function EditorJSON({ value, onChange, readonly, mode, mainMenuBar }: EditorJSON
         tabSize: 2,
         mode: (mode || 'text') as Mode,
         readOnly: readonly,
+        askToFormat: false,
         content: {
           text: value || '',
         },

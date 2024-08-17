@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.6.1
+
+### Patch Changes
+
+- fix: 禁用格式化 HMProFormJSON
+
 ## 1.6.0
 
 ### Minor Changes
