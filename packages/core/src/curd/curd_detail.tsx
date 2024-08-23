@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message, Spin } from 'antd';
 import { DrawerForm, ProForm } from '@ant-design/pro-components';
 import { useCallback, useMemo, useState } from 'react';
 import type { CURDProps } from './curd';
@@ -51,6 +51,7 @@ function CURDDetail(props: CURDDetailProps) {
     detailFormInstance,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(id ? true : false);
   const [form] = ProForm.useForm(detailFormInstance);
 
   const handleFinish = useCallback(
@@ -110,7 +111,7 @@ function CURDDetail(props: CURDDetailProps) {
   );
 
   const handleOpenChange = useCallback(
-    (open) => {
+    async (open) => {
       if (!open) {
         // 关闭重置
         form?.resetFields();
@@ -119,31 +120,48 @@ function CURDDetail(props: CURDDetailProps) {
       }
 
       setIsOpen(open);
+
       if (id) {
-        if (requestGetById) {
-          return requestGetById({ id }).then((res) => {
-            form?.setFieldsValue(res.data.data);
-          });
-        }
+        setLoading(true);
+
+        let res;
         if (requestGetByRecord) {
-          return requestGetByRecord(record).then((res) => {
-            form?.setFieldsValue(res.data.data);
-          });
+          res = await requestGetByRecord(record);
         }
+        if (requestGetById) {
+          res = await requestGetById({ id });
+        }
+
+        form?.setFieldsValue(res.data.data);
+
+        setLoading(false);
       }
+
+      return;
     },
     [form, id, requestGetById, requestGetByRecord, record]
   );
 
   const children = useMemo(() => {
+    if (!detailForm) {
+      return null;
+    }
+
     // 关闭的时候不需要 children
     if (!isOpen) {
       return null;
     }
 
-    if (!detailForm) return null;
+    if (loading) {
+      return (
+        <div className="pt-[100px] flex justify-center">
+          <Spin />
+        </div>
+      );
+    }
+
     return detailForm({ readonly: action === 'read' && !!id }, { action });
-  }, [isOpen, detailForm, action, id]);
+  }, [isOpen, loading, detailForm, action, id]);
 
   return (
     <DrawerForm

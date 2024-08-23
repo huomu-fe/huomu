@@ -1,5 +1,11 @@
 # @huomu/core
 
+## 1.6.2
+
+### Patch Changes
+
+- feat: 优化的显示逻辑
+
 ## 1.6.1
 
 ### Patch Changes
