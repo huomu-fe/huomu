@@ -1,5 +1,16 @@
 # @huomu/core
 
+## 1.7.0
+
+### Minor Changes
+
+- feat: add tool
+
+### Patch Changes
+
+- Updated dependencies
+  - @huomu/tool@1.7.0
+
 ## 1.6.2
 
 ### Patch Changes

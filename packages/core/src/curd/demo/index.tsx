@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import type { CURDProps } from '@huomu/core';
-import { CURD } from '@huomu/core';
+import { CURD, proFormSelectSearchProps } from '@huomu/core';
 import { Button } from 'antd';
 import { ProForm, ProFormSwitch, ProFormText } from '@ant-design/pro-components';
 import {
@@ -195,6 +195,7 @@ function RemoteData() {
       dataIndex: 'level',
       search: true,
       valueEnum: levels,
+      ...proFormSelectSearchProps,
     },
     {
       title: 'city(远端数据)',
@@ -210,6 +211,7 @@ function RemoteData() {
           })) || []
         );
       },
+      ...proFormSelectSearchProps,
     },
     {
       title: 'area(联动 city)',
@@ -227,6 +229,7 @@ function RemoteData() {
         );
       },
       dependencies: ['city'],
+      ...proFormSelectSearchProps,
     },
     {
       title: '学校(远端数据 label value)',
@@ -234,6 +237,7 @@ function RemoteData() {
       search: true,
       valueType: 'select',
       request: () => fakeRequestSchool(),
+      ...proFormSelectSearchProps,
     },
   ];
 
