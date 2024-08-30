@@ -43,6 +43,8 @@ const proFormSelectSearchProps = {
   fieldProps: {
     showSearch: true,
     filterOption: (input, option) => pinyinMatch(option.label, input),
+    // 本地过滤，关闭搜索 fetch data
+    fetchDataOnSearch: false,
   },
 };
 

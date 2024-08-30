@@ -202,6 +202,7 @@ function RemoteData() {
       dataIndex: 'city',
       search: true,
       request: async () => {
+        console.log('request');
         const res = await fakeRequestCity();
 
         return (
