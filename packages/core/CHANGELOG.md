@@ -1,5 +1,15 @@
 # @huomu/core
 
+## 1.8.0
+
+### Minor Changes
+
+- feat: add editor_logs
+
+### Patch Changes
+
+- @huomu/tool@1.8.0
+
 ## 1.7.1
 
 ### Patch Changes
