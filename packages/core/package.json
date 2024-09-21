@@ -15,7 +15,12 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@ant-design/plots": "^2.2.5",
+    "@codemirror/language": "^6.10.3",
+    "@codemirror/view": "^6.33.0",
     "@huomu/tool": "workspace:*",
+    "@lezer/highlight": "^1.2.1",
+    "@uiw/codemirror-themes": "^4.23.2",
+    "@uiw/react-codemirror": "^4.23.2",
     "ace-builds": "^1.33.1",
     "ahooks": "^3.7.8",
     "axios": "^1.6.5",

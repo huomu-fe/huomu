@@ -4,6 +4,7 @@ export type { CURDProps, CURDMethods } from './curd';
 export { EditorJavascript } from './editor_javascript';
 export { EditorJSON } from './editor_json';
 export { EditorMarkdown } from './editor_markdown';
+export { LogsViewer } from './editor_logs';
 export { HMProFormJSON, HMProFormJavascript, proFormSelectSearchProps } from './form';
 export { HMDescriptions } from './descriptions';
 export type { HMDescriptionsProps } from './descriptions';
