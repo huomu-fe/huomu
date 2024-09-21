@@ -4,19 +4,19 @@ import { StreamLanguage } from '@codemirror/language';
 import { createTheme } from '@uiw/codemirror-themes';
 import { tags as t } from '@lezer/highlight';
 
-interface LogsViewerProps {
+interface EditorLogsProps {
   logs: {
     timestamp: string;
     level: 'info' | 'warn' | 'error' | 'system';
-    msg: string;
+    message: string;
   }[];
 }
 
-const LogsViewer: React.FC<LogsViewerProps> = ({ logs }) => {
+const EditorLogs: React.FC<EditorLogsProps> = ({ logs }) => {
   const formattedLogs = logs
     .map((log) => {
       const levelPadded = `[${log.level}]`.padEnd(8, ' ');
-      return `${log.timestamp} ${levelPadded.toUpperCase()} ${log.msg}`;
+      return `${log.timestamp} ${levelPadded.toUpperCase()} ${log.message}`;
     })
     .join('\n');
 
@@ -66,4 +66,4 @@ const LogsViewer: React.FC<LogsViewerProps> = ({ logs }) => {
   );
 };
 
-export { LogsViewer };
+export { EditorLogs };

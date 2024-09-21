@@ -1,5 +1,12 @@
 # @huomu/core
 
+## 1.8.1
+
+### Patch Changes
+
+- fix: EditorLogs
+  - @huomu/tool@1.8.1
+
 ## 1.8.0
 
 ### Minor Changes
