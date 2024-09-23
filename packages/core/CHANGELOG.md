@@ -1,5 +1,12 @@
 # @huomu/core
 
+## 1.8.2
+
+### Patch Changes
+
+- feat: add LoadingButton
+  - @huomu/tool@1.8.2
+
 ## 1.8.1
 
 ### Patch Changes

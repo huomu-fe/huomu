@@ -1,6 +1,7 @@
 export { CURD, CURDDetail, useDelete, OperateDelete } from './curd';
 export type { CURDProps, CURDMethods } from './curd';
 
+export { LoadingButton } from './button';
 export { EditorJavascript } from './editor_javascript';
 export { EditorJSON } from './editor_json';
 export { EditorMarkdown } from './editor_markdown';
