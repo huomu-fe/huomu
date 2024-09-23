@@ -57,6 +57,7 @@ const Normal = () => {
             label="名字"
             required
             rules={[{ required: true }]}
+            extra="extra extra extra extra"
           />
         </>
       )}

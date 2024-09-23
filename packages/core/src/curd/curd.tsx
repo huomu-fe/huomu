@@ -7,6 +7,7 @@ import type { HMTableProps } from '../table';
 import { HMTable, getTableScroll } from '../table';
 import { OperateDelete } from './curd_delete';
 import { CURDDetail } from './curd_detail';
+import './style.scss';
 
 /**
  * create 创建
@@ -247,7 +248,7 @@ const CURD = forwardRef<CURDMethods, CURDProps>(function CURD(props, ref) {
   const hasSearch = !!newHMColumns?.find((column) => column.search);
 
   return (
-    <div className="">
+    <div className="curd-table">
       <HMTable
         rowKey="id"
         {...hmTableProps}

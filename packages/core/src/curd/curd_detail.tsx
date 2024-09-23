@@ -3,6 +3,7 @@ import { DrawerForm, ProForm } from '@ant-design/pro-components';
 import { useCallback, useMemo, useState } from 'react';
 import type { CURDProps } from './curd';
 import { isString } from 'lodash-es';
+import classNames from 'classnames';
 
 /**
  * create 创建
@@ -32,6 +33,9 @@ interface CURDDetailProps
   trigger: any;
   /** 添加 or 修改 成功 */
   onSuccess?: () => void;
+
+  /** 查看情况下隐藏 FormItem 的 extra，默认 true */
+  hideExtraInRead?: boolean;
 }
 
 function CURDDetail(props: CURDDetailProps) {
@@ -160,7 +164,15 @@ function CURDDetail(props: CURDDetailProps) {
       );
     }
 
-    return detailForm({ readonly: action === 'read' && !!id }, { action });
+    return (
+      <div
+        className={classNames('curd-detail', `curd-detail-action-${action}`, {
+          'curd-detail-hide-extra': action === 'read',
+        })}
+      >
+        {detailForm({ readonly: action === 'read' && !!id }, { action })}
+      </div>
+    );
   }, [isOpen, loading, detailForm, action, id]);
 
   return (
