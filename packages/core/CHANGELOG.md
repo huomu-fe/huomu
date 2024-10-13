@@ -1,5 +1,12 @@
 # @huomu/core
 
+## 1.9.1
+
+### Patch Changes
+
+- fix: hmRequestGetByRecord
+  - @huomu/tool@1.9.1
+
 ## 1.9.0
 
 ### Minor Changes
