@@ -1,6 +1,6 @@
 {
   "name": "@huomu/core",
-  "version": "1.8.3",
+  "version": "1.9.0",
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
@@ -17,6 +17,7 @@
     "@ant-design/plots": "^2.2.5",
     "@codemirror/language": "^6.10.3",
     "@codemirror/view": "^6.33.0",
+    "@fe-free/core": "^1.1.7",
     "@huomu/tool": "workspace:*",
     "@lezer/highlight": "^1.2.1",
     "@uiw/codemirror-themes": "^4.23.2",

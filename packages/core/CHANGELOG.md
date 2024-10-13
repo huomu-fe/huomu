@@ -1,5 +1,15 @@
 # @huomu/core
 
+## 1.9.0
+
+### Minor Changes
+
+- feat: add HMCRUD
+
+### Patch Changes
+
+- @huomu/tool@1.9.0
+
 ## 1.8.3
 
 ### Patch Changes

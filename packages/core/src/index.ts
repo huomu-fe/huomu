@@ -1,5 +1,7 @@
 export { CURD, CURDDetail, useDelete, OperateDelete } from './curd';
 export type { CURDProps, CURDMethods } from './curd';
+export { HMCRUD } from './hm_crud';
+export type { HMCRUDProps, HMCRUDMethods } from './hm_crud';
 
 export { LoadingButton } from './button';
 export { EditorJavascript } from './editor_javascript';
