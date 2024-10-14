@@ -127,8 +127,8 @@ importers:
         specifier: ^6.33.0
         version: 6.33.0
       '@fe-free/core':
-        specifier: ^1.1.7
-        version: 1.1.7(@ant-design/pro-components@2.7.19)(@babel/runtime@7.25.6)(@codemirror/autocomplete@6.18.1)(@codemirror/lint@6.8.1)(@codemirror/search@6.5.6)(@codemirror/state@6.4.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(@types/react@18.3.8)(antd@5.20.6)(codemirror@6.0.1)(react-dom@17.0.2)(react@18.3.1)
+        specifier: ^1.1.8
+        version: 1.1.8(@ant-design/pro-components@2.7.19)(@babel/runtime@7.25.6)(@codemirror/autocomplete@6.18.1)(@codemirror/lint@6.8.1)(@codemirror/search@6.5.6)(@codemirror/state@6.4.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(@types/react@18.3.8)(antd@5.20.6)(codemirror@6.0.1)(react-dom@17.0.2)(react@18.3.1)
       '@huomu/tool':
         specifier: workspace:*
         version: link:../tool
@@ -3065,8 +3065,8 @@ packages:
     resolution: {integrity: sha512-5Aap/GaRupgNx/feGBwLLTVv8OQFfv3pq2lPRzPg9R+IOBnDgghTGW7l7EuVXOvg5cc/xSAlRW8rBrjIC3Nvqw==}
     dev: false
 
-  /@fe-free/core@1.1.7(@ant-design/pro-components@2.7.19)(@babel/runtime@7.25.6)(@codemirror/autocomplete@6.18.1)(@codemirror/lint@6.8.1)(@codemirror/search@6.5.6)(@codemirror/state@6.4.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(@types/react@18.3.8)(antd@5.20.6)(codemirror@6.0.1)(react-dom@17.0.2)(react@18.3.1):
-    resolution: {integrity: sha512-91wt2DkuVXPaNiiIQ/XQ2x0/WG8XOmu38eHi7nRbz81UxrkHdzEtYtzutfcQcPkO1uEQcYU9SMtigxDBl6OkIQ==}
+  /@fe-free/core@1.1.8(@ant-design/pro-components@2.7.19)(@babel/runtime@7.25.6)(@codemirror/autocomplete@6.18.1)(@codemirror/lint@6.8.1)(@codemirror/search@6.5.6)(@codemirror/state@6.4.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(@types/react@18.3.8)(antd@5.20.6)(codemirror@6.0.1)(react-dom@17.0.2)(react@18.3.1):
+    resolution: {integrity: sha512-zJKNGgQJKIyziRDZS8PAxC6oOBgoUdy0jrPscqkq4Cj9+eSbvPfh5vVlqviILvJ/HsId2wSwQEdGahcxMq0DFA==}
     peerDependencies:
       '@ant-design/pro-components': ^2.7.15
       antd: ^5.20.0
@@ -3077,7 +3077,7 @@ packages:
       '@ant-design/pro-components': 2.7.19(@types/lodash-es@4.17.12)(antd@5.20.6)(rc-field-form@2.4.0)(react-dom@17.0.2)(react@18.3.1)
       '@codemirror/language': 6.10.3
       '@codemirror/view': 6.33.0
-      '@fe-free/tool': 1.1.7
+      '@fe-free/tool': 1.1.8
       '@lezer/highlight': 1.2.1
       '@uiw/codemirror-themes': 4.23.2(@codemirror/language@6.10.3)(@codemirror/state@6.4.1)(@codemirror/view@6.33.0)
       '@uiw/react-codemirror': 4.23.2(@babel/runtime@7.25.6)(@codemirror/autocomplete@6.18.1)(@codemirror/language@6.10.3)(@codemirror/lint@6.8.1)(@codemirror/search@6.5.6)(@codemirror/state@6.4.1)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.33.0)(codemirror@6.0.1)(react-dom@17.0.2)(react@18.3.1)
@@ -3111,8 +3111,8 @@ packages:
       - supports-color
     dev: false
 
-  /@fe-free/tool@1.1.7:
-    resolution: {integrity: sha512-hz1eXaYrJeol8yDsfvihVHOWRQy91d3P9XQQBoNYQaUUWtjR6xN3DKRab+qn0BLNzthgd0iODlk1M9gdlqvN9w==}
+  /@fe-free/tool@1.1.8:
+    resolution: {integrity: sha512-pDPVV+6UDruAxapds3lEDjqsdoedmh37bJpGfFUkebsZrjA1v6CIfAGgMiJDGn3JE2es/bAjurdJBGjPO9dgMg==}
     dependencies:
       lodash-es: 4.17.21
     dev: false

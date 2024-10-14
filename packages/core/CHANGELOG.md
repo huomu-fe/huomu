@@ -1,5 +1,12 @@
 # @huomu/core
 
+## 1.9.2
+
+### Patch Changes
+
+- feat: add CRUDDetail
+  - @huomu/tool@1.9.2
+
 ## 1.9.1
 
 ### Patch Changes

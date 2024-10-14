@@ -1,5 +1,5 @@
-import type { CRUDProps } from '@fe-free/core';
-import { CRUD } from '@fe-free/core';
+import type { CRUDProps, CRUDDetailProps } from '@fe-free/core';
+import { CRUD, CRUDDetail } from '@fe-free/core';
 import { forwardRef, useCallback, useMemo } from 'react';
 import type { AxiosResponse } from 'axios';
 import type { CURDMethods } from '../curd';
@@ -57,5 +57,24 @@ const HMCRUD = forwardRef<HMCRUDMethods, HMCRUDProps>((props, ref) => {
   );
 });
 
-export { HMCRUD };
-export type { HMCRUDProps, HMCRUDMethods };
+interface HMCRUDDetailProps extends CRUDDetailProps {
+  hmRequestGetByRecord?: (record: any) => Promise<any>;
+}
+const HMCRUDDetail = ({ hmRequestGetByRecord, ...rest }: HMCRUDDetailProps) => {
+  const newRequestGetByRecord = useCallback(
+    (record) => {
+      return hmRequestGetByRecord!(record).then((res) => res.data.data);
+    },
+    [hmRequestGetByRecord]
+  );
+
+  return (
+    <CRUDDetail
+      {...rest}
+      requestGetByRecord={hmRequestGetByRecord ? newRequestGetByRecord : rest.requestGetByRecord}
+    />
+  );
+};
+
+export { HMCRUD, HMCRUDDetail };
+export type { HMCRUDProps, HMCRUDMethods, HMCRUDDetailProps };
