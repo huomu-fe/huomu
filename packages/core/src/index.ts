@@ -1,7 +1,6 @@
-export { CURD, CURDDetail, useDelete, OperateDelete } from './curd';
-export type { CURDProps, CURDMethods } from './curd';
-export { HMCRUD } from './hm_crud';
-export type { HMCRUDProps, HMCRUDMethods } from './hm_crud';
+export { HMCRUD, HMCRUDDetail } from './hm_crud';
+export type { HMCRUDProps, HMCRUDMethods, HMCRUDDetailProps } from './hm_crud';
+export { useDelete } from '@fe-free/core/src/crud/crud_delete';
 
 export { LoadingButton } from './button';
 export { EditorJavascript } from './editor_javascript';

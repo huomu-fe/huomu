@@ -1,5 +1,12 @@
 # @huomu/core
 
+## 1.9.3
+
+### Patch Changes
+
+- feat: add useDelete
+  - @huomu/tool@1.9.3
+
 ## 1.9.2
 
 ### Patch Changes
